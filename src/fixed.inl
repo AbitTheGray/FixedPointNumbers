@@ -15,7 +15,7 @@ namespace fpn
 namespace fpn
 {
     template <std::size_t IntegralBits, std::size_t FractionalBits>
-    constexpr fixed<IntegralBits, FractionalBits>::fixed(
+    inline constexpr fixed<IntegralBits, FractionalBits>::fixed(
         const typename integer_bits<IntegralBits>::signed_type   integralValue,
         const typename integer_bits<FractionalBits>::signed_type fractionalValue
     ) noexcept
@@ -114,7 +114,7 @@ namespace fpn
         Value = static_cast<decltype(Value)>(std::round(value * BIT(FB)));
 #else
         // Because MSVC does not have `constexpr` for `std::round`
-        Value = static_cast<decltype(Value)>(value * BIT(FractionalBits));
+        Value = static_cast<decltype(Value)>(value * BIT(FB));
 #endif
     }
     template<std::size_t IB, std::size_t FB>
