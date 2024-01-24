@@ -9,6 +9,14 @@
 
 namespace fpn
 {
+#if defined(__GNUC__) || (defined(_MSVC_LANG) && _MSVC_LANG >= 202600)
+#   define FPN_CONSTEXPR_HAS 1
+#   define FPN_CONSTEXPR constexpr
+#endif
+#ifndef FPN_CONSTEXPR
+#   define FPN_CONSTEXPR_HAS 0
+#   define FPN_CONSTEXPR
+#endif
     /**
      * Fixed-point numbers.
      */

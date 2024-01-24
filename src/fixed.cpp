@@ -59,6 +59,7 @@ namespace fpn
     static_assert(static_cast<double>(fixed32_16(1.0625)) == 1.0625);
     static_assert(static_cast<double>(fixed32_16(2.0625)) == 2.0625);
 
+#if FPN_CONSTEXPR_HAS == 1
     static_assert(static_cast<double>(fixed32_16(0.1)) == 0.100'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(1.1)) == 1.100'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(2.1)) == 2.100'006'103'515'625);
@@ -74,11 +75,13 @@ namespace fpn
     static_assert(static_cast<double>(fixed32_16(0.4)) == 0.399'993'896'484'375);
     static_assert(static_cast<double>(fixed32_16(1.4)) == 1.399'993'896'484'375);
     static_assert(static_cast<double>(fixed32_16(2.4)) == 2.399'993'896'484'375);
+#endif
 
     static_assert(static_cast<double>(fixed32_16(0.5)) == 0.5);
     static_assert(static_cast<double>(fixed32_16(1.5)) == 1.5);
     static_assert(static_cast<double>(fixed32_16(2.5)) == 2.5);
 
+#if FPN_CONSTEXPR_HAS == 1
     static_assert(static_cast<double>(fixed32_16(0.6)) == 0.600'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(1.6)) == 1.600'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(2.6)) == 2.600'006'103'515'625);
@@ -94,6 +97,7 @@ namespace fpn
     static_assert(static_cast<double>(fixed32_16(0.9)) == 0.899'993'896'484'375);
     static_assert(static_cast<double>(fixed32_16(1.9)) == 1.899'993'896'484'375);
     static_assert(static_cast<double>(fixed32_16(2.9)) == 2.899'993'896'484'375);
+#endif
 
     static_assert(static_cast<double>(fixed32_16(-0.0)) == -0.0);
     static_assert(static_cast<double>(fixed32_16(-1.0)) == -1.0);
@@ -115,6 +119,7 @@ namespace fpn
     static_assert(static_cast<double>(fixed32_16(-1.0625)) == -1.0625);
     static_assert(static_cast<double>(fixed32_16(-2.0625)) == -2.0625);
 
+#if FPN_CONSTEXPR_HAS == 1
     static_assert(static_cast<double>(fixed32_16(-0.1)) == -0.100'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(-1.1)) == -1.100'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(-2.1)) == -2.100'006'103'515'625);
@@ -130,6 +135,7 @@ namespace fpn
     static_assert(static_cast<double>(fixed32_16(-0.4)) == -0.399'993'896'484'375);
     static_assert(static_cast<double>(fixed32_16(-1.4)) == -1.399'993'896'484'375);
     static_assert(static_cast<double>(fixed32_16(-2.4)) == -2.399'993'896'484'375);
+#endif
 
     static_assert(static_cast<int32_t>(fixed32_16(-0.5)) == -1);
     static_assert(static_cast<int32_t>(fixed32_16(-1.5)) == -2);
@@ -139,6 +145,7 @@ namespace fpn
     static_assert(static_cast<double>(fixed32_16(-1.5)) == -1.5);
     static_assert(static_cast<double>(fixed32_16(-2.5)) == -2.5);
 
+#if FPN_CONSTEXPR_HAS == 1
     static_assert(static_cast<double>(fixed32_16(-0.6)) == -0.600'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(-1.6)) == -1.600'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(-2.6)) == -2.600'006'103'515'625);
@@ -154,6 +161,7 @@ namespace fpn
     static_assert(static_cast<double>(fixed32_16(-0.9)) == -0.899'993'896'484'375);
     static_assert(static_cast<double>(fixed32_16(-1.9)) == -1.899'993'896'484'375);
     static_assert(static_cast<double>(fixed32_16(-2.9)) == -2.899'993'896'484'375);
+#endif
 
     static_assert(fixed32_16(-1.0f) == -1);
     static_assert(-fixed32_16(1.0f) == -1);

@@ -110,8 +110,12 @@ namespace fpn
     template<std::size_t IB, std::size_t FB>
     inline constexpr fixed<IB, FB>::fixed(const std::floating_point auto value) noexcept
     {
-        //Value = static_cast<decltype(Value)>(value * BIT(FractionalBits));
+#if FPN_CONSTEXPR_HAS == 1
         Value = static_cast<decltype(Value)>(std::round(value * BIT(FB)));
+#else
+        // Because MSVC does not have `constexpr` for `std::round`
+        Value = static_cast<decltype(Value)>(value * BIT(FractionalBits));
+#endif
     }
     template<std::size_t IB, std::size_t FB>
     template<typename TF>
