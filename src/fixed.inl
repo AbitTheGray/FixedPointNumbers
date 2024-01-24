@@ -14,87 +14,117 @@ namespace Voxelite
 }
 namespace Voxelite
 {
-    inline constexpr fixed32_16 operator+(const fixed32_16 left, const fixed32_16 right) noexcept
+    template <std::size_t IntegralBits, std::size_t FractionalBits>
+    constexpr fixed<IntegralBits, FractionalBits>::fixed(
+        const typename integer_bits<IntegralBits>::signed_type   integralValue,
+        const typename integer_bits<FractionalBits>::signed_type fractionalValue
+    ) noexcept
+      : Value(integralValue << IntegralBits + fractionalValue)
+    {
+        assert(integralValue   < BIT<std::size_t>(IntegralBits + 1u));
+        assert(fractionalValue < BIT<std::size_t>(FractionalBits + 1u));
+    }
+}
+namespace Voxelite
+{
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB> operator+(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
     {
         return left + right;
     }
-    inline constexpr fixed32_16 operator-(const fixed32_16 left, const fixed32_16 right) noexcept
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB> operator-(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
     {
         return left - right;
     }
-    inline constexpr fixed32_16 operator*(const fixed32_16 left, const fixed32_16 right) noexcept
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB> operator*(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
     {
         return static_cast<long double>(left) * static_cast<long double>(right); //TODO Without floating-point math
     }
-    inline constexpr fixed32_16 operator/(const fixed32_16 left, const fixed32_16 right) noexcept
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB> operator/(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
     {
         return static_cast<long double>(left) / static_cast<long double>(right); //TODO Without floating-point math
     }
 }
 namespace Voxelite
 {
-    inline constexpr fixed32_16::fixed32_16(const std::integral auto value) noexcept
-      : Value(value << FractionalBits)
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB>::fixed(const std::integral auto value) noexcept
+      : Value(value << FB)
     {
     }
+    template<std::size_t IB, std::size_t FB>
     template <typename TI> requires std::integral<TI>
-    inline constexpr fixed32_16::operator TI() const noexcept
+    inline constexpr fixed<IB, FB>::operator TI() const noexcept
     {
-        return Value >> FractionalBits;
+        return Value >> FB;
     }
 }
 namespace Voxelite
 {
-    inline constexpr fixed32_16 operator+(const fixed32_16 left, const std::integral auto right) noexcept
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB> operator+(const fixed<IB, FB> left, const std::integral auto right) noexcept
     {
-        return left + fixed32_16(right);
+        return left + fixed<IB, FB>(right);
     }
-    inline constexpr fixed32_16 operator+(const std::integral auto left, const fixed32_16 right) noexcept
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB> operator+(const std::integral auto left, const fixed<IB, FB> right) noexcept
     {
-        return fixed32_16(left) + right;
+        return fixed<IB, FB>(left) + right;
     }
-    inline constexpr fixed32_16 operator-(const fixed32_16 left, const std::integral auto right) noexcept
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB> operator-(const fixed<IB, FB> left, const std::integral auto right) noexcept
     {
-        return left - fixed32_16(right);
+        return left - fixed<IB, FB>(right);
     }
-    inline constexpr fixed32_16 operator-(const std::integral auto left, const fixed32_16 right) noexcept
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB> operator-(const std::integral auto left, const fixed<IB, FB> right) noexcept
     {
-        return fixed32_16(left) - right;
+        return fixed<IB, FB>(left) - right;
     }
-    inline constexpr fixed32_16 operator*(const fixed32_16 left, const std::integral auto right) noexcept
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB> operator*(const fixed<IB, FB> left, const std::integral auto right) noexcept
     {
         return { left.Value * right };
     }
-    inline constexpr fixed32_16 operator*(const std::integral auto left, const fixed32_16 right) noexcept
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB> operator*(const std::integral auto left, const fixed<IB, FB> right) noexcept
     {
         return { left * right.Value };
     }
-    inline constexpr fixed32_16 operator/(const fixed32_16 left, const std::integral auto right) noexcept
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB> operator/(const fixed<IB, FB> left, const std::integral auto right) noexcept
     {
         return { left.Value / right };
     }
-    inline constexpr fixed32_16 operator/(const std::integral auto left, const fixed32_16 right) noexcept
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB> operator/(const std::integral auto left, const fixed<IB, FB> right) noexcept
     {
         return { left / right.Value };
     }
 }
 namespace Voxelite
 {
-    inline constexpr fixed32_16::fixed32_16(const std::floating_point auto value) noexcept
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB>::fixed(const std::floating_point auto value) noexcept
     {
         //Value = static_cast<decltype(Value)>(value * BIT(FractionalBits));
-        Value = static_cast<decltype(Value)>(std::round(value * BIT(FractionalBits)));
+        Value = static_cast<decltype(Value)>(std::round(value * BIT(FB)));
     }
+    template<std::size_t IB, std::size_t FB>
     template<typename TF>
         requires std::floating_point<TF>
-    inline constexpr fixed32_16::operator TF() const noexcept
+    inline constexpr fixed<IB, FB>::operator TF() const noexcept
     {
-        return static_cast<TF>(Value) / static_cast<TF>(BIT(FractionalBits));
+        return static_cast<TF>(Value) / static_cast<TF>(BIT(FB));
     }
 }
 namespace Voxelite
 {
-    inline std::string to_string(const fixed32_16 value)
+    template<std::size_t IB, std::size_t FB>
+    inline std::string to_string(const fixed<IB, FB> value)
     {
         return std::to_string(static_cast<double>(value));
     }

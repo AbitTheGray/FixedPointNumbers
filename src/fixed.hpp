@@ -5,98 +5,136 @@
 #include <compare>
 #include <string>
 
+#include "integer_bits.hpp"
+
 namespace Voxelite
 {
     /**
      * Fixed-point numbers.
-     *
      */
-    struct fixed32_16
+    template<std::size_t IntegralBits, std::size_t FractionalBits>
+    struct fixed
     {
-        int64_t Value;
-        static constexpr std::size_t IntegralBits = 32;
-        static constexpr std::size_t FractionalBits = 16;
+        static_assert(IntegralBits > 1);
+        static_assert(FractionalBits > 0);
+        static_assert(IntegralBits + FractionalBits <= 64);
 
-        inline constexpr fixed32_16() noexcept : Value() {}
-        inline constexpr fixed32_16(
+        typename integer_bits<IntegralBits + FractionalBits>::signed_type Value;
+
+        inline constexpr fixed() noexcept : Value() {}
+        inline constexpr fixed(
             const decltype(Value) value
         ) noexcept : Value(value) {}
-        inline explicit constexpr fixed32_16(
-            const decltype(Value) wholeValue,
-            const decltype(Value) decimalValue
+        inline explicit constexpr fixed(
+            typename integer_bits<IntegralBits>::signed_type integralValue,
+            typename integer_bits<FractionalBits>::signed_type fractionalValue
         ) noexcept;
 
         // Copy
-        inline constexpr fixed32_16(const fixed32_16& other) noexcept = default;
-        inline constexpr fixed32_16& operator=(const fixed32_16& other) noexcept = default;
+        inline constexpr fixed(const fixed& other) noexcept = default;
+        inline constexpr fixed& operator=(const fixed& other) noexcept = default;
         // Move
-        inline constexpr fixed32_16(fixed32_16&& other) noexcept = default;
-        inline constexpr fixed32_16& operator=(fixed32_16&& other) noexcept = default;
+        inline constexpr fixed(fixed&& other) noexcept = default;
+        inline constexpr fixed& operator=(fixed&& other) noexcept = default;
 
         [[nodiscard]] inline constexpr operator bool() const noexcept { return Value; }
 
-        [[nodiscard]] inline constexpr bool operator==(const fixed32_16 other) const noexcept { return Value == other.Value; }
-        [[nodiscard]] inline constexpr auto operator<=>(const fixed32_16 other) const noexcept { return Value <=> other.Value; }
+        [[nodiscard]] inline constexpr bool operator==(const fixed other) const noexcept { return Value == other.Value; }
+        [[nodiscard]] inline constexpr auto operator<=>(const fixed other) const noexcept { return Value <=> other.Value; }
 
-        [[nodiscard]] inline constexpr fixed32_16 operator-() const noexcept { return { -Value }; }
+        [[nodiscard]] inline constexpr fixed operator-() const noexcept { return { -Value }; }
 
         /*
-        [[nodiscard]] inline constexpr fixed32_16 operator++() noexcept;
-        [[nodiscard]] inline constexpr fixed32_16 operator--() noexcept;
-        [[nodiscard]] inline constexpr fixed32_16 operator++(int) noexcept;
-        [[nodiscard]] inline constexpr fixed32_16 operator--(int) noexcept;
+        [[nodiscard]] inline constexpr fixed operator++() noexcept;
+        [[nodiscard]] inline constexpr fixed operator--() noexcept;
+        [[nodiscard]] inline constexpr fixed operator++(int) noexcept;
+        [[nodiscard]] inline constexpr fixed operator--(int) noexcept;
         */
 
 #pragma region integers
-        inline constexpr fixed32_16(std::integral auto) noexcept;
+        inline constexpr fixed(std::integral auto) noexcept;
 
         template<typename TI>
             requires std::integral<TI>
         [[nodiscard]] inline constexpr operator TI() const noexcept;
 
-        [[nodiscard]] inline constexpr bool operator==(const std::integral auto other) const noexcept { return *this == fixed32_16(other); }
-        [[nodiscard]] inline constexpr auto operator<=>(const std::integral auto other) const noexcept { return *this <=> fixed32_16(other); }
+        [[nodiscard]] inline constexpr bool operator==(const std::integral auto other) const noexcept { return *this == fixed(other); }
+        [[nodiscard]] inline constexpr auto operator<=>(const std::integral auto other) const noexcept { return *this <=> fixed(other); }
 #pragma endregion
 
 #pragma region floating-point numbers
-        inline constexpr explicit fixed32_16(std::floating_point auto) noexcept;
+        inline constexpr explicit fixed(std::floating_point auto) noexcept;
 
         template<typename TF>
             requires std::floating_point<TF>
         [[nodiscard]] inline constexpr explicit operator TF() const noexcept;
 
-        [[nodiscard]] inline constexpr bool operator==(const std::floating_point auto other) const noexcept { return *this == fixed32_16(other); }
-        [[nodiscard]] inline constexpr auto operator<=>(const std::floating_point auto other) const noexcept { return *this <=> fixed32_16(other); }
+        [[nodiscard]] inline constexpr bool operator==(const std::floating_point auto other) const noexcept { return *this == fixed(other); }
+        [[nodiscard]] inline constexpr auto operator<=>(const std::floating_point auto other) const noexcept { return *this <=> fixed(other); }
 #pragma endregion
+
+        //TODO Conversion to other fixed-point numbers
     };
-    static_assert(sizeof(fixed32_16) == sizeof(uint64_t));
 
-    [[nodiscard]] inline constexpr fixed32_16 operator+(fixed32_16, fixed32_16) noexcept;
-    [[nodiscard]] inline constexpr fixed32_16 operator-(fixed32_16, fixed32_16) noexcept;
-    [[nodiscard]] inline constexpr fixed32_16 operator*(fixed32_16, fixed32_16) noexcept;
-    [[nodiscard]] inline constexpr fixed32_16 operator/(fixed32_16, fixed32_16) noexcept;
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline constexpr fixed<IB, FB> operator+(fixed<IB, FB>, fixed<IB, FB>) noexcept;
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline constexpr fixed<IB, FB> operator-(fixed<IB, FB>, fixed<IB, FB>) noexcept;
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline constexpr fixed<IB, FB> operator*(fixed<IB, FB>, fixed<IB, FB>) noexcept;
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline constexpr fixed<IB, FB> operator/(fixed<IB, FB>, fixed<IB, FB>) noexcept;
 
-    [[nodiscard]] inline std::string to_string(fixed32_16);
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline std::string to_string(fixed<IB, FB>);
 
 #pragma region integers
-    [[nodiscard]] inline constexpr fixed32_16 operator+(fixed32_16, std::integral auto) noexcept;
-    [[nodiscard]] inline constexpr fixed32_16 operator-(fixed32_16, std::integral auto) noexcept;
-    [[nodiscard]] inline constexpr fixed32_16 operator*(fixed32_16, std::integral auto) noexcept;
-    [[nodiscard]] inline constexpr fixed32_16 operator/(fixed32_16, std::integral auto) noexcept;
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline constexpr fixed<IB, FB> operator+(fixed<IB, FB>, std::integral auto) noexcept;
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline constexpr fixed<IB, FB> operator-(fixed<IB, FB>, std::integral auto) noexcept;
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline constexpr fixed<IB, FB> operator*(fixed<IB, FB>, std::integral auto) noexcept;
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline constexpr fixed<IB, FB> operator/(fixed<IB, FB>, std::integral auto) noexcept;
 
-    [[nodiscard]] inline constexpr fixed32_16 operator+(std::integral auto, fixed32_16) noexcept;
-    [[nodiscard]] inline constexpr fixed32_16 operator-(std::integral auto, fixed32_16) noexcept;
-    [[nodiscard]] inline constexpr fixed32_16 operator*(std::integral auto, fixed32_16) noexcept;
-    [[nodiscard]] inline constexpr fixed32_16 operator/(std::integral auto, fixed32_16) noexcept;
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline constexpr fixed<IB, FB> operator+(std::integral auto, fixed<IB, FB>) noexcept;
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline constexpr fixed<IB, FB> operator-(std::integral auto, fixed<IB, FB>) noexcept;
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline constexpr fixed<IB, FB> operator*(std::integral auto, fixed<IB, FB>) noexcept;
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline constexpr fixed<IB, FB> operator/(std::integral auto, fixed<IB, FB>) noexcept;
 #pragma endregion
+    
+    using fixed8_8  = fixed<8,  8>;
+    using fixed8_16 = fixed<8, 16>;
+    using fixed8_24 = fixed<8, 24>;
+    using fixed8_32 = fixed<8, 32>;
+    using fixed8_40 = fixed<8, 40>;
+    using fixed8_48 = fixed<8, 48>;
+    using fixed8_56 = fixed<8, 56>;
+    
+    using fixed16_8  = fixed<16,  8>;
+    using fixed16_16 = fixed<16, 16>;
+    using fixed16_24 = fixed<16, 24>;
+    using fixed16_32 = fixed<16, 32>;
+    using fixed16_40 = fixed<16, 40>;
+    using fixed16_48 = fixed<16, 48>;
+
+    using fixed32_8  = fixed<32,  8>;
+    using fixed32_16 = fixed<32, 16>;
+    using fixed32_24 = fixed<32, 24>;
+    using fixed32_32 = fixed<32, 32>;
 }
 
 #include "fixed.inl"
 
-template<>
-struct std::hash<Voxelite::fixed32_16>
+template<std::size_t IB, std::size_t FB>
+struct std::hash<Voxelite::fixed<IB, FB>>
 {
-    [[nodiscard]] std::size_t operator()(const Voxelite::fixed32_16& value) const noexcept\
+    [[nodiscard]] std::size_t operator()(const Voxelite::fixed<IB, FB>& value) const noexcept\
     {
         return value.Value;
     }
