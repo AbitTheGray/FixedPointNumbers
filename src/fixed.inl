@@ -40,7 +40,7 @@ namespace Voxelite
     template<std::size_t IB, std::size_t FB>
     inline constexpr fixed<IB, FB> operator*(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
     {
-        return static_cast<long double>(left) * static_cast<long double>(right); //TODO Without floating-point math
+        return static_cast<double>(left) * static_cast<double>(right); //TODO Without floating-point math
     }
     template<std::size_t IB, std::size_t FB>
     inline constexpr fixed<IB, FB> operator/(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
