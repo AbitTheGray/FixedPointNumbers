@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-namespace Voxelite
+namespace fpn
 {
     template<typename T>
         requires std::is_integral_v<T> && std::is_unsigned_v<T>
@@ -12,7 +12,7 @@ namespace Voxelite
         return 1u << v;
     }
 }
-namespace Voxelite
+namespace fpn
 {
     template <std::size_t IntegralBits, std::size_t FractionalBits>
     constexpr fixed<IntegralBits, FractionalBits>::fixed(
@@ -25,7 +25,7 @@ namespace Voxelite
         assert(fractionalValue < BIT<std::size_t>(FractionalBits + 1u));
     }
 }
-namespace Voxelite
+namespace fpn
 {
     template<std::size_t IB, std::size_t FB>
     inline constexpr fixed<IB, FB> operator+(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
@@ -48,7 +48,7 @@ namespace Voxelite
         return static_cast<long double>(left) / static_cast<long double>(right); //TODO Without floating-point math
     }
 }
-namespace Voxelite
+namespace fpn
 {
     template<std::size_t IB, std::size_t FB>
     inline constexpr fixed<IB, FB>::fixed(const std::integral auto value) noexcept
@@ -62,7 +62,7 @@ namespace Voxelite
         return Value >> FB;
     }
 }
-namespace Voxelite
+namespace fpn
 {
     template<std::size_t IB, std::size_t FB>
     inline constexpr fixed<IB, FB> operator+(const fixed<IB, FB> left, const std::integral auto right) noexcept
@@ -105,7 +105,7 @@ namespace Voxelite
         return { left / right.Value };
     }
 }
-namespace Voxelite
+namespace fpn
 {
     template<std::size_t IB, std::size_t FB>
     inline constexpr fixed<IB, FB>::fixed(const std::floating_point auto value) noexcept
@@ -121,7 +121,7 @@ namespace Voxelite
         return static_cast<TF>(Value) / static_cast<TF>(BIT(FB));
     }
 }
-namespace Voxelite
+namespace fpn
 {
     template<std::size_t IB, std::size_t FB>
     inline std::string to_string(const fixed<IB, FB> value)

@@ -1,6 +1,6 @@
 #include "fixed.hpp"
 
-namespace Voxelite
+namespace fpn
 {
     static_assert(fixed32_16()     == 0);
 

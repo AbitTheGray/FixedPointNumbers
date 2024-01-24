@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Voxelite
+namespace fpn
 {
     template<std::size_t T>
     struct integer_bits

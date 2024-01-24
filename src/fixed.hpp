@@ -7,7 +7,7 @@
 
 #include "integer_bits.hpp"
 
-namespace Voxelite
+namespace fpn
 {
     /**
      * Fixed-point numbers.
@@ -132,9 +132,9 @@ namespace Voxelite
 #include "fixed.inl"
 
 template<std::size_t IB, std::size_t FB>
-struct std::hash<Voxelite::fixed<IB, FB>>
+struct std::hash<fpn::fixed<IB, FB>>
 {
-    [[nodiscard]] std::size_t operator()(const Voxelite::fixed<IB, FB>& value) const noexcept\
+    [[nodiscard]] std::size_t operator()(const fpn::fixed<IB, FB>& value) const noexcept\
     {
         return value.Value;
     }
