@@ -8,12 +8,13 @@ namespace fpn
     static_assert(fixed32_16(1)   == 1);
     static_assert(fixed32_16(2)   == 2);
     static_assert(fixed32_16(-1)  == -1);
+    static_assert(-fixed32_16(1)  == fixed32_16(-1));
     static_assert(-fixed32_16(1)  == -1);
     static_assert(-fixed32_16(-1) == 1);
 
-    //static_assert(fixed32_16(0u)   == 0);
-    //static_assert(fixed32_16(1u)   == 1);
-    //static_assert(fixed32_16(2u)   == 2);
+    static_assert(fixed32_16(0u)   == 0);
+    static_assert(fixed32_16(1u)   == 1);
+    static_assert(fixed32_16(2u)   == 2);
 
     static_assert(fixed32_16(0.0f) == 0);
     static_assert(fixed32_16(1.0f) == 1);
@@ -163,11 +164,11 @@ namespace fpn
     static_assert(static_cast<double>(fixed32_16(-2.9)) == -2.899'993'896'484'375);
 #endif
 
-    static_assert(fixed32_16(-1.0f) == -1);
-    static_assert(-fixed32_16(1.0f) == -1);
+    static_assert(fixed32_16(-1.0f)  == -1);
+    static_assert(-fixed32_16(1.0f)  == -1);
     static_assert(-fixed32_16(-1.0f) == 1);
 
     static_assert(fixed32_16(-1.0)  == -1);
     static_assert(-fixed32_16(1.0)  == -1);
-    static_assert(-fixed32_16(-1.0)  == 1);
+    static_assert(-fixed32_16(-1.0) == 1);
 }

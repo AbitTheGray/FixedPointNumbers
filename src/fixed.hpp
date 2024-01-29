@@ -30,9 +30,7 @@ namespace fpn
         typename integer_bits<IntegralBits + FractionalBits>::signed_type Value;
 
         inline constexpr fixed() noexcept : Value() {}
-        inline constexpr fixed(
-            const decltype(Value) value
-        ) noexcept : Value(value) {}
+        inline constexpr fixed(decltype(Value)) noexcept;
         inline explicit constexpr fixed(
             typename integer_bits<IntegralBits>::signed_type     integralValue,
             typename integer_bits<FractionalBits>::unsigned_type fractionalValue
