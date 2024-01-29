@@ -20,7 +20,16 @@ add_compile_options("$<$<CONFIG:DEBUG>:-DDEBUG>") # Define DEBUG in Debug builds
 # Source
 #--------------------------------
 
-file(GLOB_RECURSE PROJECT_SOURCE src/*.hpp src/*.cpp src/*.h src/*.c)
+file(GLOB_RECURSE PROJECT_SOURCE
+    src/*.hpp
+    src/*.cpp
+    src/*.h
+    src/*.c
+
+    include/*.hpp
+    include/*.h
+)
 
 add_library(FixedPointNumbers STATIC ${PROJECT_SOURCE})
-target_include_directories(FixedPointNumbers PUBLIC src/)
+target_include_directories(FixedPointNumbers PRIVATE src/)
+target_include_directories(FixedPointNumbers PUBLIC include/)
