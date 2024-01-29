@@ -7,22 +7,57 @@ namespace fpn
 {
     template<typename T>
         requires std::is_integral_v<T> && std::is_unsigned_v<T>
-    [[nodiscard]] inline static constexpr T (BIT)(T v) noexcept
+    [[nodiscard]] inline static constexpr T (BIT)(const T v) noexcept
     {
-        return 1u << v;
+        return static_cast<T>(1u) << v;
+    }
+    template<typename T>
+        requires std::is_integral_v<T> && std::is_unsigned_v<T>
+    [[nodiscard]] inline static constexpr T (BITS)(const T v) noexcept
+    {
+        return BIT(v) - 1u;
     }
 }
 namespace fpn
 {
     template <std::size_t IntegralBits, std::size_t FractionalBits>
     inline constexpr fixed<IntegralBits, FractionalBits>::fixed(
-        const typename integer_bits<IntegralBits>::signed_type   integralValue,
-        const typename integer_bits<FractionalBits>::signed_type fractionalValue
+        const typename integer_bits<IntegralBits>::signed_type     integralValue,
+        const typename integer_bits<FractionalBits>::unsigned_type fractionalValue
     ) noexcept
-      : Value(integralValue << IntegralBits + fractionalValue)
+      : Value((integralValue << IntegralBits) + fractionalValue)
     {
-        assert(integralValue   < BIT<std::size_t>(IntegralBits + 1u));
+        assert(integralValue   < BIT<std::size_t>(IntegralBits   + 1u));
         assert(fractionalValue < BIT<std::size_t>(FractionalBits + 1u));
+    }
+    template <std::size_t IntegralBits, std::size_t FractionalBits>
+    template<std::size_t IB2, std::size_t FB2>
+    inline constexpr fixed<IntegralBits, FractionalBits>::fixed(const fixed<IB2, FB2> other) noexcept
+    {
+        using TLarger = std::conditional_t<sizeof(decltype(Value)) >= sizeof(decltype(other.Value)), decltype(Value), decltype(other.Value)>;
+
+        if constexpr(FractionalBits == FB2)
+        {
+            // Same amount of fractional bits.
+            // Can juse use cast - same as casting between `int8` and `int16`
+            Value = static_cast<decltype(Value)>(other.Value);
+        }
+        else
+        {
+            if constexpr(FractionalBits < FB2)
+            {
+                // Use other's value, just truncate additional bits
+                Value = static_cast<decltype(Value)>(other.Value >> (FB2 - FractionalBits));
+            }
+            else // FractionalBits > FB2
+            {
+                // Use other's value, just add additional bits
+                Value = static_cast<decltype(Value)>(static_cast<TLarger>(other.Value) << (FB2 - FractionalBits));
+            }
+        }
+
+        // Limit total bits
+        Value = Value & BITS(IntegralBits + FractionalBits);
     }
 }
 namespace fpn
@@ -50,9 +85,48 @@ namespace fpn
 }
 namespace fpn
 {
+    template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
+    inline constexpr auto operator+(const fixed<IB1, FB1> left, const fixed<IB2, FB2> right) noexcept
+    {
+        static_assert(IB1 != IB2 || FB1 != FB2);
+        const std::size_t IB = IB1 > IB2 ? IB1 : IB2; // std::max(IB1, IB2)
+        const std::size_t FB = FB1 > FB2 ? FB1 : FB2; // std::max(FB1, FB2)
+
+        return fixed<IB, FB>(left) + fixed<IB, FB>(right);
+    }
+    template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
+    inline constexpr auto operator-(const fixed<IB1, FB1> left, const fixed<IB2, FB2> right) noexcept
+    {
+        static_assert(IB1 != IB2 || FB1 != FB2);
+        const std::size_t IB = IB1 > IB2 ? IB1 : IB2; // std::max(IB1, IB2)
+        const std::size_t FB = FB1 > FB2 ? FB1 : FB2; // std::max(FB1, FB2)
+
+        return fixed<IB, FB>(left) - fixed<IB, FB>(right);
+    }
+    template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
+    inline constexpr auto operator*(const fixed<IB1, FB1> left, const fixed<IB2, FB2> right) noexcept
+    {
+        static_assert(IB1 != IB2 || FB1 != FB2);
+        const std::size_t IB = IB1 > IB2 ? IB1 : IB2; // std::max(IB1, IB2)
+        const std::size_t FB = FB1 > FB2 ? FB1 : FB2; // std::max(FB1, FB2)
+
+        return fixed<IB, FB>(left) * fixed<IB, FB>(right);
+    }
+    template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
+    inline constexpr auto operator/(const fixed<IB1, FB1> left, const fixed<IB2, FB2> right) noexcept
+    {
+        static_assert(IB1 != IB2 || FB1 != FB2);
+        const std::size_t IB = IB1 > IB2 ? IB1 : IB2; // std::max(IB1, IB2)
+        const std::size_t FB = FB1 > FB2 ? FB1 : FB2; // std::max(FB1, FB2)
+
+        return fixed<IB, FB>(left) / fixed<IB, FB>(right);
+    }
+}
+namespace fpn
+{
     template<std::size_t IB, std::size_t FB>
     inline constexpr fixed<IB, FB>::fixed(const std::integral auto value) noexcept
-      : Value(value << FB)
+      : Value(static_cast<decltype(Value)>(value) << FB)
     {
     }
     template<std::size_t IB, std::size_t FB>

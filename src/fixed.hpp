@@ -34,9 +34,11 @@ namespace fpn
             const decltype(Value) value
         ) noexcept : Value(value) {}
         inline explicit constexpr fixed(
-            typename integer_bits<IntegralBits>::signed_type integralValue,
-            typename integer_bits<FractionalBits>::signed_type fractionalValue
+            typename integer_bits<IntegralBits>::signed_type     integralValue,
+            typename integer_bits<FractionalBits>::unsigned_type fractionalValue
         ) noexcept;
+        template<std::size_t IB2, std::size_t FB2>
+        inline constexpr fixed(fixed<IB2, FB2>) noexcept;
 
         // Copy
         inline constexpr fixed(const fixed& other) noexcept = default;
@@ -95,6 +97,17 @@ namespace fpn
 
     template<std::size_t IB, std::size_t FB>
     [[nodiscard]] inline std::string to_string(fixed<IB, FB>);
+
+#pragma region Other fixed-point numbers
+    template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
+    [[nodiscard]] inline constexpr auto operator+(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
+    template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
+    [[nodiscard]] inline constexpr auto operator-(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
+    template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
+    [[nodiscard]] inline constexpr auto operator*(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
+    template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
+    [[nodiscard]] inline constexpr auto operator/(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
+#pragma endregion
 
 #pragma region integers
     template<std::size_t IB, std::size_t FB>
