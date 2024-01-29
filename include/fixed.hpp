@@ -188,6 +188,7 @@ namespace fpn
     [[nodiscard]] inline constexpr fixed<IB, FB> operator%(fixed<IB, FB>, std::integral auto) noexcept;
 #pragma endregion
 
+#if __SIZEOF_POINTER__ >= 8
     using fixed8_8  = fixed<8,  8>;
     using fixed8_16 = fixed<8, 16>;
     using fixed8_24 = fixed<8, 24>;
@@ -213,6 +214,17 @@ namespace fpn
     using fixed32_16 = fixed<32, 16>;
     using fixed32_24 = fixed<32, 24>;
     using fixed32_32 = fixed<32, 32>;
+#else
+    using fixed8_8  = fixed<8,  8>;
+    using fixed8_16 = fixed<8, 16>;
+    using fixed8_24 = fixed<8, 24>;
+
+    using fixed16_8  = fixed<16,  8>;
+    using fixed16_16 = fixed<16, 16>;
+
+    using fixed24_8  = fixed<24,  8>;
+    using fixed24_16 = fixed<24, 16>;
+#endif
 }
 
 #include "fixed.inl"

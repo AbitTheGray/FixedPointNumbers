@@ -2,65 +2,65 @@
 
 namespace fpn
 {
-    static_assert(fixed32_16()     == 0);
+    static_assert(fixed8_8() == 0);
 
-    static_assert(fixed32_16(0)   == 0);
-    static_assert(fixed32_16(1)   == 1);
-    static_assert(fixed32_16(2)   == 2);
-    static_assert(fixed32_16(-1)  == -1);
-    static_assert(-fixed32_16(1)  == fixed32_16(-1));
-    static_assert(-fixed32_16(1)  == -1);
-    static_assert(-fixed32_16(-1) == 1);
+    static_assert(fixed8_8(0)   == 0);
+    static_assert(fixed8_8(1)   == 1);
+    static_assert(fixed8_8(2)   == 2);
+    static_assert(fixed8_8(-1)  == -1);
+    static_assert(-fixed8_8(1)  == fixed8_8(-1));
+    static_assert(-fixed8_8(1)  == -1);
+    static_assert(-fixed8_8(-1) == 1);
 
-    static_assert(fixed32_16(0u)   == 0);
-    static_assert(fixed32_16(1u)   == 1);
-    static_assert(fixed32_16(2u)   == 2);
+    static_assert(fixed8_8(0u)   == 0);
+    static_assert(fixed8_8(1u)   == 1);
+    static_assert(fixed8_8(2u)   == 2);
 
-    static_assert(fixed32_16(0.0f) == 0);
-    static_assert(fixed32_16(1.0f) == 1);
-    static_assert(fixed32_16(2.0f) == 2);
+    static_assert(fixed8_8(0.0f) == 0);
+    static_assert(fixed8_8(1.0f) == 1);
+    static_assert(fixed8_8(2.0f) == 2);
 
-    static_assert(fixed32_16(0.0) == 0);
-    static_assert(fixed32_16(1.0) == 1);
-    static_assert(fixed32_16(2.0) == 2);
+    static_assert(fixed8_8(0.0) == 0);
+    static_assert(fixed8_8(1.0) == 1);
+    static_assert(fixed8_8(2.0) == 2);
 
-    static_assert(fixed32_16(0.1) != 0);
-    static_assert(fixed32_16(1.1) != 1);
-    static_assert(fixed32_16(2.1) != 2);
+    static_assert(fixed8_8(0.1) != 0);
+    static_assert(fixed8_8(1.1) != 1);
+    static_assert(fixed8_8(2.1) != 2);
 
-    static_assert(fixed32_16(0.9) != 0);
-    static_assert(fixed32_16(1.9) != 1);
-    static_assert(fixed32_16(2.9) != 2);
+    static_assert(fixed8_8(0.9) != 0);
+    static_assert(fixed8_8(1.9) != 1);
+    static_assert(fixed8_8(2.9) != 2);
 
-    static_assert(fixed32_16(0.9) != 1);
-    static_assert(fixed32_16(1.9) != 2);
-    static_assert(fixed32_16(2.9) != 3);
+    static_assert(fixed8_8(0.9) != 1);
+    static_assert(fixed8_8(1.9) != 2);
+    static_assert(fixed8_8(2.9) != 3);
 
-    static_assert(static_cast<double>(fixed32_16(0)) == 0.0);
-    static_assert(static_cast<double>(fixed32_16(1)) == 1.0);
-    static_assert(static_cast<double>(fixed32_16(2)) == 2.0);
+    static_assert(static_cast<double>(fixed8_8(0)) == 0.0);
+    static_assert(static_cast<double>(fixed8_8(1)) == 1.0);
+    static_assert(static_cast<double>(fixed8_8(2)) == 2.0);
 
-    static_assert(static_cast<double>(fixed32_16(0.0)) == 0.0);
-    static_assert(static_cast<double>(fixed32_16(1.0)) == 1.0);
-    static_assert(static_cast<double>(fixed32_16(2.0)) == 2.0);
+    static_assert(static_cast<double>(fixed8_8(0.0)) == 0.0);
+    static_assert(static_cast<double>(fixed8_8(1.0)) == 1.0);
+    static_assert(static_cast<double>(fixed8_8(2.0)) == 2.0);
 
-    static_assert(static_cast<double>(fixed32_16(0.5)) == 0.5);
-    static_assert(static_cast<double>(fixed32_16(1.5)) == 1.5);
-    static_assert(static_cast<double>(fixed32_16(2.5)) == 2.5);
+    static_assert(static_cast<double>(fixed8_8(0.5)) == 0.5);
+    static_assert(static_cast<double>(fixed8_8(1.5)) == 1.5);
+    static_assert(static_cast<double>(fixed8_8(2.5)) == 2.5);
 
-    static_assert(static_cast<double>(fixed32_16(0.25)) == 0.25);
-    static_assert(static_cast<double>(fixed32_16(1.25)) == 1.25);
-    static_assert(static_cast<double>(fixed32_16(2.25)) == 2.25);
+    static_assert(static_cast<double>(fixed8_8(0.25)) == 0.25);
+    static_assert(static_cast<double>(fixed8_8(1.25)) == 1.25);
+    static_assert(static_cast<double>(fixed8_8(2.25)) == 2.25);
 
-    static_assert(static_cast<double>(fixed32_16(0.125)) == 0.125);
-    static_assert(static_cast<double>(fixed32_16(1.125)) == 1.125);
-    static_assert(static_cast<double>(fixed32_16(2.125)) == 2.125);
+    static_assert(static_cast<double>(fixed8_8(0.125)) == 0.125);
+    static_assert(static_cast<double>(fixed8_8(1.125)) == 1.125);
+    static_assert(static_cast<double>(fixed8_8(2.125)) == 2.125);
 
-    static_assert(static_cast<double>(fixed32_16(0.0625)) == 0.0625);
-    static_assert(static_cast<double>(fixed32_16(1.0625)) == 1.0625);
-    static_assert(static_cast<double>(fixed32_16(2.0625)) == 2.0625);
+    static_assert(static_cast<double>(fixed8_8(0.0625)) == 0.0625);
+    static_assert(static_cast<double>(fixed8_8(1.0625)) == 1.0625);
+    static_assert(static_cast<double>(fixed8_8(2.0625)) == 2.0625);
 
-#if FPN_CONSTEXPR_HAS == 1
+#if FPN_CONSTEXPR_HAS == 1 && __SIZEOF_POINTER__ >= 8
     static_assert(static_cast<double>(fixed32_16(0.1)) == 0.100'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(1.1)) == 1.100'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(2.1)) == 2.100'006'103'515'625);
@@ -78,11 +78,11 @@ namespace fpn
     static_assert(static_cast<double>(fixed32_16(2.4)) == 2.399'993'896'484'375);
 #endif
 
-    static_assert(static_cast<double>(fixed32_16(0.5)) == 0.5);
-    static_assert(static_cast<double>(fixed32_16(1.5)) == 1.5);
-    static_assert(static_cast<double>(fixed32_16(2.5)) == 2.5);
+    static_assert(static_cast<double>(fixed8_8(0.5)) == 0.5);
+    static_assert(static_cast<double>(fixed8_8(1.5)) == 1.5);
+    static_assert(static_cast<double>(fixed8_8(2.5)) == 2.5);
 
-#if FPN_CONSTEXPR_HAS == 1
+#if FPN_CONSTEXPR_HAS == 1 && __SIZEOF_POINTER__ >= 8
     static_assert(static_cast<double>(fixed32_16(0.6)) == 0.600'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(1.6)) == 1.600'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(2.6)) == 2.600'006'103'515'625);
@@ -100,27 +100,27 @@ namespace fpn
     static_assert(static_cast<double>(fixed32_16(2.9)) == 2.899'993'896'484'375);
 #endif
 
-    static_assert(static_cast<double>(fixed32_16(-0.0)) == -0.0);
-    static_assert(static_cast<double>(fixed32_16(-1.0)) == -1.0);
-    static_assert(static_cast<double>(fixed32_16(-2.0)) == -2.0);
+    static_assert(static_cast<double>(fixed8_8(-0.0)) == -0.0);
+    static_assert(static_cast<double>(fixed8_8(-1.0)) == -1.0);
+    static_assert(static_cast<double>(fixed8_8(-2.0)) == -2.0);
 
-    static_assert(static_cast<double>(fixed32_16(-0.5)) == -0.5);
-    static_assert(static_cast<double>(fixed32_16(-1.5)) == -1.5);
-    static_assert(static_cast<double>(fixed32_16(-2.5)) == -2.5);
+    static_assert(static_cast<double>(fixed8_8(-0.5)) == -0.5);
+    static_assert(static_cast<double>(fixed8_8(-1.5)) == -1.5);
+    static_assert(static_cast<double>(fixed8_8(-2.5)) == -2.5);
 
-    static_assert(static_cast<double>(fixed32_16(-0.25)) == -0.25);
-    static_assert(static_cast<double>(fixed32_16(-1.25)) == -1.25);
-    static_assert(static_cast<double>(fixed32_16(-2.25)) == -2.25);
+    static_assert(static_cast<double>(fixed8_8(-0.25)) == -0.25);
+    static_assert(static_cast<double>(fixed8_8(-1.25)) == -1.25);
+    static_assert(static_cast<double>(fixed8_8(-2.25)) == -2.25);
 
-    static_assert(static_cast<double>(fixed32_16(-0.125)) == -0.125);
-    static_assert(static_cast<double>(fixed32_16(-1.125)) == -1.125);
-    static_assert(static_cast<double>(fixed32_16(-2.125)) == -2.125);
+    static_assert(static_cast<double>(fixed8_8(-0.125)) == -0.125);
+    static_assert(static_cast<double>(fixed8_8(-1.125)) == -1.125);
+    static_assert(static_cast<double>(fixed8_8(-2.125)) == -2.125);
 
-    static_assert(static_cast<double>(fixed32_16(-0.0625)) == -0.0625);
-    static_assert(static_cast<double>(fixed32_16(-1.0625)) == -1.0625);
-    static_assert(static_cast<double>(fixed32_16(-2.0625)) == -2.0625);
+    static_assert(static_cast<double>(fixed8_8(-0.0625)) == -0.0625);
+    static_assert(static_cast<double>(fixed8_8(-1.0625)) == -1.0625);
+    static_assert(static_cast<double>(fixed8_8(-2.0625)) == -2.0625);
 
-#if FPN_CONSTEXPR_HAS == 1
+#if FPN_CONSTEXPR_HAS == 1 && __SIZEOF_POINTER__ >= 8
     static_assert(static_cast<double>(fixed32_16(-0.1)) == -0.100'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(-1.1)) == -1.100'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(-2.1)) == -2.100'006'103'515'625);
@@ -138,15 +138,15 @@ namespace fpn
     static_assert(static_cast<double>(fixed32_16(-2.4)) == -2.399'993'896'484'375);
 #endif
 
-    static_assert(static_cast<int32_t>(fixed32_16(-0.5)) == -1);
-    static_assert(static_cast<int32_t>(fixed32_16(-1.5)) == -2);
-    static_assert(static_cast<int32_t>(fixed32_16(-2.5)) == -3);
+    static_assert(static_cast<int32_t>(fixed8_8(-0.5)) == -1);
+    static_assert(static_cast<int32_t>(fixed8_8(-1.5)) == -2);
+    static_assert(static_cast<int32_t>(fixed8_8(-2.5)) == -3);
 
-    static_assert(static_cast<double>(fixed32_16(-0.5)) == -0.5);
-    static_assert(static_cast<double>(fixed32_16(-1.5)) == -1.5);
-    static_assert(static_cast<double>(fixed32_16(-2.5)) == -2.5);
+    static_assert(static_cast<double>(fixed8_8(-0.5)) == -0.5);
+    static_assert(static_cast<double>(fixed8_8(-1.5)) == -1.5);
+    static_assert(static_cast<double>(fixed8_8(-2.5)) == -2.5);
 
-#if FPN_CONSTEXPR_HAS == 1
+#if FPN_CONSTEXPR_HAS == 1 && __SIZEOF_POINTER__ >= 8
     static_assert(static_cast<double>(fixed32_16(-0.6)) == -0.600'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(-1.6)) == -1.600'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(-2.6)) == -2.600'006'103'515'625);
