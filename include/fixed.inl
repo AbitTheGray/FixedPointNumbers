@@ -30,7 +30,7 @@ namespace fpn
         requires std::is_integral_v<T> && std::is_unsigned_v<T>
     [[nodiscard]] inline static constexpr T (BITS)(const T v) noexcept
     {
-        return BIT(v) - 1u;
+        return BIT<T>(v) - 1u;
     }
     static_assert(BITS<uint8_t>(0) == 0b0000'0000u);
     static_assert(BITS<uint8_t>(1) == 0b0000'0001u);
