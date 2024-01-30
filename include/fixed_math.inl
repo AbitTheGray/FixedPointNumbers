@@ -92,9 +92,10 @@ namespace fpn
 namespace fpn
 {
     template<std::size_t IB, std::size_t FB>
-    inline FPN_CONSTEXPR fixed<IB, FB> pow(fixed<IB, FB>, fixed<IB, FB>) noexcept
+    inline FPN_CONSTEXPR fixed<IB, FB> pow(const fixed<IB, FB> x, const fixed<IB, FB> y) noexcept
     {
-        //TODO
+        return std::pow(static_cast<double>(x), static_cast<double>(y));
+        //TODO Fixed-point-number specific implementation
     }
     template<std::size_t IB, std::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> sqrt(const fixed<IB, FB> value) noexcept
