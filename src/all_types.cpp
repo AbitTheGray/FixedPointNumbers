@@ -30,6 +30,10 @@ namespace fpn
     static_assert(fixed32_24() == 0);
     static_assert(fixed32_32() == 0);
 
+    static_assert(fixed40_8()  == 0);
+    static_assert(fixed40_16() == 0);
+    static_assert(fixed40_24() == 0);
+
     static_assert(fixed48_8()  == 0);
     static_assert(fixed48_16() == 0);
 

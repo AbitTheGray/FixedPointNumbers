@@ -218,6 +218,10 @@ namespace fpn
     using fixed32_24 = fixed<32, 24>;
     using fixed32_32 = fixed<32, 32>;
 
+    using fixed40_8  = fixed<32,  8>;
+    using fixed40_16 = fixed<32, 16>;
+    using fixed40_24 = fixed<32, 24>;
+
     using fixed48_8  = fixed<48,  8>;
     using fixed48_16 = fixed<48, 16>;
 
@@ -231,7 +235,6 @@ namespace fpn
     using fixed16_16 = fixed<16, 16>;
 
     using fixed24_8  = fixed<24,  8>;
-    using fixed24_16 = fixed<24, 16>;
 #endif
 }
 

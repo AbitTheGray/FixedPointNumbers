@@ -33,3 +33,18 @@ file(GLOB_RECURSE PROJECT_SOURCE
 add_library(FixedPointNumbers STATIC ${PROJECT_SOURCE})
 target_include_directories(FixedPointNumbers PRIVATE src/)
 target_include_directories(FixedPointNumbers PUBLIC include/)
+
+
+
+#--------------------------------
+# Source for GLM
+#--------------------------------
+
+file(GLOB_RECURSE PROJECT_SOURCE_GLM
+    include_glm/*.hpp
+    include_glm/*.h
+)
+
+add_library(FixedPointNumbers_GLM STATIC ${PROJECT_SOURCE_GLM})
+target_include_directories(FixedPointNumbers_GLM PUBLIC include_glm/)
+target_link_libraries(FixedPointNumbers_GLM FixedPointNumbers glm)
