@@ -4,6 +4,7 @@
 #include <concepts>
 #include <compare>
 #include <string>
+#include <numbers>
 
 #include "integer_bits.hpp"
 
