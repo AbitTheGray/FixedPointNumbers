@@ -8,6 +8,8 @@ namespace fpn
         using type          = typename integer_bits<T + 1>::type;
         using unsigned_type = std::make_unsigned_t<type>;
         using signed_type   = std::make_signed_t<type>;
+
+        integer_bits() = delete;
     };
     template<>
     struct integer_bits<0>
@@ -15,6 +17,8 @@ namespace fpn
         using type          = void;
         using unsigned_type = void;
         using signed_type   = void;
+
+        integer_bits() = delete;
     };
     template<>
     struct integer_bits<8>
@@ -23,6 +27,8 @@ namespace fpn
         using unsigned_type = std::make_unsigned_t<type>;
         using signed_type   = std::make_signed_t<type>;
         static_assert(sizeof(unsigned_type) == 1);
+
+        integer_bits() = delete;
     };
     template<>
     struct integer_bits<16>
@@ -31,6 +37,8 @@ namespace fpn
         using unsigned_type = std::make_unsigned_t<type>;
         using signed_type   = std::make_signed_t<type>;
         static_assert(sizeof(unsigned_type) == 2);
+
+        integer_bits() = delete;
     };
     template<>
     struct integer_bits<32>
@@ -39,6 +47,8 @@ namespace fpn
         using unsigned_type = std::make_unsigned_t<type>;
         using signed_type   = std::make_signed_t<type>;
         static_assert(sizeof(unsigned_type) == 4);
+
+        integer_bits() = delete;
     };
 #if __SIZEOF_POINTER__ >= 8
     template<>
@@ -49,6 +59,8 @@ namespace fpn
         using signed_type   = std::make_signed_t<type>;
         static_assert(sizeof(unsigned_type) == 8);
 
+        integer_bits() = delete;
+
         static_assert(sizeof(std::size_t) >= sizeof(uint64_t));
     };
 #endif
@@ -58,11 +70,12 @@ namespace fpn
         requires sizeof(std::size_t) >= sizeof(__int128)
     struct integer_bits<128>
     {
-
         using type          = __int128;
         using unsigned_type = std::make_unsigned_t<type>;
         using signed_type   = std::make_signed_t<type>;
         static_assert(sizeof(unsigned_type) == 16);
+
+        integer_bits() = delete;
 
         static_assert(sizeof(std::size_t) >= sizeof(__int128));
     };
