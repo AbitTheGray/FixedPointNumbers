@@ -98,18 +98,18 @@ namespace fpn
 #pragma endregion
 
 #pragma region Mathematical constants
-        inline static const fixed e          = std::numbers::e_v<double>;
-        inline static const fixed log2e      = std::numbers::log2e_v<double>;
-        inline static const fixed log10e     = std::numbers::log10e_v<double>;
-        inline static const fixed pi         = std::numbers::pi_v<double>;
-        inline static const fixed inv_pi     = std::numbers::inv_pi_v<double>;
-        inline static const fixed inv_sqrtpi = std::numbers::inv_sqrtpi_v<double>;
-        inline static const fixed ln2        = std::numbers::ln2_v<double>;
-        inline static const fixed ln10       = std::numbers::ln10_v<double>;
-        inline static const fixed sqrt2      = std::numbers::sqrt2_v<double>;
-        inline static const fixed sqrt3      = std::numbers::sqrt3_v<double>;
-        inline static const fixed egamma     = std::numbers::egamma_v<double>;
-        inline static const fixed phi        = std::numbers::phi_v<double>;
+        inline static const fixed e          = std::numbers::template e_v<double>;
+        inline static const fixed log2e      = std::numbers::template log2e_v<double>;
+        inline static const fixed log10e     = std::numbers::template log10e_v<double>;
+        inline static const fixed pi         = std::numbers::template pi_v<double>;
+        inline static const fixed inv_pi     = std::numbers::template inv_pi_v<double>;
+        inline static const fixed inv_sqrtpi = std::numbers::template inv_sqrtpi_v<double>;
+        inline static const fixed ln2        = std::numbers::template ln2_v<double>;
+        inline static const fixed ln10       = std::numbers::template ln10_v<double>;
+        inline static const fixed sqrt2      = std::numbers::template sqrt2_v<double>;
+        inline static const fixed sqrt3      = std::numbers::template sqrt3_v<double>;
+        inline static const fixed egamma     = std::numbers::template egamma_v<double>;
+        inline static const fixed phi        = std::numbers::template phi_v<double>;
 #pragma endregion
 
         /*
