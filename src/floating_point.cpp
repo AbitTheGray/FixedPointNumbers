@@ -2,20 +2,6 @@
 
 namespace fpn
 {
-    static_assert(fixed8_8() == 0);
-
-    static_assert(fixed8_8(0)   == 0);
-    static_assert(fixed8_8(1)   == 1);
-    static_assert(fixed8_8(2)   == 2);
-    static_assert(fixed8_8(-1)  == -1);
-    static_assert(-fixed8_8(1)  == fixed8_8(-1));
-    static_assert(-fixed8_8(1)  == -1);
-    static_assert(-fixed8_8(-1) == 1);
-
-    static_assert(fixed8_8(0u)   == 0);
-    static_assert(fixed8_8(1u)   == 1);
-    static_assert(fixed8_8(2u)   == 2);
-
     static_assert(fixed8_8(0.0f) == 0);
     static_assert(fixed8_8(1.0f) == 1);
     static_assert(fixed8_8(2.0f) == 2);
@@ -171,37 +157,4 @@ namespace fpn
     static_assert(fixed8_8(-1.0)  == -1);
     static_assert(-fixed8_8(1.0)  == -1);
     static_assert(-fixed8_8(-1.0) == 1);
-
-#pragma region Integral + Fractional Values
-    static_assert(fixed8_8(0).IntegralValue().operator double() == 0);
-    static_assert(fixed8_8(1).IntegralValue().operator double() == 1);
-    static_assert(fixed8_8(2).IntegralValue().operator double() == 2);
-    static_assert(fixed8_8(-1).IntegralValue().operator double() == -1);
-    static_assert(fixed8_8(-2).IntegralValue().operator double() == -2);
-    static_assert(fixed8_8(0.5).IntegralValue().operator double() == 0);
-    static_assert(fixed8_8(1.5).IntegralValue().operator double() == 1);
-    static_assert(fixed8_8(2.5).IntegralValue().operator double() == 2);
-    static_assert(fixed8_8(-1.5).IntegralValue().operator double() == -2);
-    static_assert(fixed8_8(-2.5).IntegralValue().operator double() == -3);
-
-    static_assert(fixed8_8(0.0  ).FractionalValue().operator double() == 0.0);
-    static_assert(fixed8_8(0.125).FractionalValue().operator double() == 0.125);
-    static_assert(fixed8_8(0.5  ).FractionalValue().operator double() == 0.5);
-    static_assert(fixed8_8(0.875).FractionalValue().operator double() == 0.875);
-    static_assert(fixed8_8(1.0  ).FractionalValue().operator double() == 0.0);
-    static_assert(fixed8_8(-0.125).FractionalValue().operator double() == 0.875);
-    static_assert(fixed8_8(-0.5  ).FractionalValue().operator double() == 0.5);
-    static_assert(fixed8_8(-0.875).FractionalValue().operator double() == 0.125);
-    static_assert(fixed8_8(-1.0  ).FractionalValue().operator double() == 0.0);
-#pragma endregion
-
-#pragma region Min + Max values
-    static_assert(fixed8_8::MinValue().IntegralValue() == -128);
-    static_assert(fixed8_8::MaxValue().IntegralValue() == 127);
-
-    static_assert(fixed8_8::MinValue().operator double() == -128);
-
-    static_assert(fixed8_8::MaxValue().operator double() > 127.9);
-    static_assert(fixed8_8::MaxValue().operator double() < 128);
-#pragma endregion
 }

@@ -3,6 +3,7 @@
 
 #include <cmath>
 
+// Utility functions
 namespace fpn
 {
     /**
@@ -49,11 +50,15 @@ namespace fpn
         requires std::is_integral_v<T> && std::is_signed_v<T>
     [[nodiscard]] inline static constexpr T TruncateBits_Signed(const T v, const std::size_t keepBits) noexcept
     {
+        if(keepBits == sizeof(T) * 8)
+            return v;
         if(v >= 0)
             return v & BITS(keepBits);
         else
             return (v & BITS(keepBits)) /* bits we don't want to change */ | (~BITS(keepBits)) /* bits we want to be set */;
     }
+    static_assert(TruncateBits_Signed(1, 2) == 1);
+    static_assert(TruncateBits_Signed(2, 2) == 2);
     static_assert(TruncateBits_Signed(1, 4) == 1);
     static_assert(TruncateBits_Signed(2, 4) == 2);
     static_assert(TruncateBits_Signed(-1, 4) == -1);
@@ -63,6 +68,7 @@ namespace fpn
     static_assert(TruncateBits_Signed(-17, 4) == -1);
     static_assert(TruncateBits_Signed(-64, 4) == -16);
 }
+// Constructors
 namespace fpn
 {
     template <std::size_t IntegralBits, std::size_t FractionalBits>
@@ -85,25 +91,25 @@ namespace fpn
     template<std::size_t IB2, std::size_t FB2>
     inline constexpr fixed<IntegralBits, FractionalBits>::fixed(const fixed<IB2, FB2> other) noexcept
     {
-        using TLarger = std::conditional_t<sizeof(ValueType) >= sizeof(decltype(other.Value)), ValueType, decltype(other.Value)>;
+        using TLarger = std::conditional_t<sizeof(typename ValueType::T) >= sizeof(decltype(other.Value.Value)), typename ValueType::T, decltype(other.Value.Value)>;
 
         if constexpr(FractionalBits == FB2)
         {
             // Same amount of fractional bits.
             // Can juse use cast - same as casting between `int8` and `int16`
-            Value.Value = static_cast<ValueType>(other.Value);
+            Value.Value = static_cast<typename ValueType::T>(other.Value.Value);
         }
         else
         {
             if constexpr(FractionalBits < FB2)
             {
                 // Use other's value, just truncate additional bits
-                Value.Value = static_cast<ValueType>(other.Value >> (FB2 - FractionalBits));
+                Value.Value = static_cast<typename ValueType::T>(other.Value.Value >> (FB2 - FractionalBits));
             }
             else // FractionalBits > FB2
             {
                 // Use other's value, just add additional bits
-                Value.Value = static_cast<ValueType>(static_cast<TLarger>(other.Value) << (FB2 - FractionalBits));
+                Value.Value = static_cast<typename ValueType::T>(static_cast<TLarger>(other.Value.Value) << (FractionalBits - FB2));
             }
         }
 
@@ -149,6 +155,7 @@ namespace fpn
         return fixed( ValueType( ~static_cast<typename ValueType::T>(BIT(IB + FB - 1u)) ) );
     }
 }
+// Fixed-point mathematical operators
 namespace fpn
 {
     template<std::size_t IB, std::size_t FB>
@@ -174,16 +181,17 @@ namespace fpn
         );
     }
     template<std::size_t IB, std::size_t FB>
-    inline constexpr fixed<IB, FB> operator*(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
+    inline fixed<IB, FB> operator*(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
     {
         return static_cast<double>(left) * static_cast<double>(right); //TODO Without floating-point math
     }
     template<std::size_t IB, std::size_t FB>
-    inline constexpr fixed<IB, FB> operator/(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
+    inline fixed<IB, FB> operator/(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
     {
         return static_cast<long double>(left) / static_cast<long double>(right); //TODO Without floating-point math
     }
 }
+// Different fixed-point mathematical operators
 namespace fpn
 {
     template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
@@ -205,7 +213,7 @@ namespace fpn
         return fixed<IB, FB>(left) - fixed<IB, FB>(right);
     }
     template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
-    inline constexpr auto operator*(const fixed<IB1, FB1> left, const fixed<IB2, FB2> right) noexcept
+    inline auto operator*(const fixed<IB1, FB1> left, const fixed<IB2, FB2> right) noexcept
     {
         static_assert(IB1 != IB2 || FB1 != FB2);
         const std::size_t IB = IB1 > IB2 ? IB1 : IB2; // std::max(IB1, IB2)
@@ -214,7 +222,7 @@ namespace fpn
         return fixed<IB, FB>(left) * fixed<IB, FB>(right);
     }
     template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
-    inline constexpr auto operator/(const fixed<IB1, FB1> left, const fixed<IB2, FB2> right) noexcept
+    inline auto operator/(const fixed<IB1, FB1> left, const fixed<IB2, FB2> right) noexcept
     {
         static_assert(IB1 != IB2 || FB1 != FB2);
         const std::size_t IB = IB1 > IB2 ? IB1 : IB2; // std::max(IB1, IB2)
@@ -223,6 +231,7 @@ namespace fpn
         return fixed<IB, FB>(left) / fixed<IB, FB>(right);
     }
 }
+// Integral conversion
 namespace fpn
 {
     template<std::size_t IB, std::size_t FB>
@@ -237,6 +246,7 @@ namespace fpn
         return static_cast<TI>(Value.Value >> FB);
     }
 }
+// Integral mathematical operators
 namespace fpn
 {
     template<std::size_t IB, std::size_t FB>
@@ -293,7 +303,7 @@ namespace fpn
         );
     }
     template<std::size_t IB, std::size_t FB>
-    inline constexpr fixed<IB, FB> operator/(const std::integral auto left, const fixed<IB, FB> right) noexcept
+    inline fixed<IB, FB> operator/(const std::integral auto left, const fixed<IB, FB> right) noexcept
     {
         return fixed<IB, FB>(left) / right;
     }
@@ -309,16 +319,23 @@ namespace fpn
         ) + left.FractionalValue();
     }
 }
+// Floating-point conversion
 namespace fpn
 {
     template<std::size_t IB, std::size_t FB>
     inline constexpr fixed<IB, FB>::fixed(const std::floating_point auto value) noexcept
     {
 #if FPN_CONSTEXPR_HAS == 1
-        Value.Value = static_cast<typename ValueType::T>(std::round(value * BIT(FB)));
+        if(std::isnan(value) || std::isinf(value))
+            Value = {};
+        else
+            Value.Value = static_cast<typename ValueType::T>(std::round(value * BIT(FB)));
 #else
         // Because MSVC does not have `constexpr` for `std::round`
-        Value.Value = static_cast<typename ValueType::T>(value * BIT(FB));
+        if(std::isnan(value) || std::isinf(value))
+            Value = {};
+        else
+            Value.Value = static_cast<typename ValueType::T>(value * BIT(FB));
 #endif
     }
     template<std::size_t IB, std::size_t FB>
@@ -329,6 +346,7 @@ namespace fpn
         return static_cast<TF>(Value.Value) / static_cast<TF>(BIT(FB));
     }
 }
+// to_string
 namespace fpn
 {
     template<std::size_t IB, std::size_t FB>

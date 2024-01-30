@@ -55,7 +55,7 @@ namespace fpn
             typename integer_bits<FractionalBits>::unsigned_type fractionalValue
         ) noexcept;
         template<std::size_t IB2, std::size_t FB2>
-        inline constexpr fixed(fixed<IB2, FB2>) noexcept;
+        inline explicit constexpr fixed(fixed<IB2, FB2>) noexcept;
 
         // Copy
         inline constexpr fixed(const fixed& other) noexcept = default;
@@ -147,9 +147,9 @@ namespace fpn
     template<std::size_t IB, std::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator-(fixed<IB, FB>, fixed<IB, FB>) noexcept;
     template<std::size_t IB, std::size_t FB>
-    [[nodiscard]] inline constexpr fixed<IB, FB> operator*(fixed<IB, FB>, fixed<IB, FB>) noexcept;
+    [[nodiscard]] inline fixed<IB, FB> operator*(fixed<IB, FB>, fixed<IB, FB>) noexcept;
     template<std::size_t IB, std::size_t FB>
-    [[nodiscard]] inline constexpr fixed<IB, FB> operator/(fixed<IB, FB>, fixed<IB, FB>) noexcept;
+    [[nodiscard]] inline fixed<IB, FB> operator/(fixed<IB, FB>, fixed<IB, FB>) noexcept;
 
     template<std::size_t IB, std::size_t FB>
     [[nodiscard]] inline std::string to_string(fixed<IB, FB>);
@@ -160,9 +160,9 @@ namespace fpn
     template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
     [[nodiscard]] inline constexpr auto operator-(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
     template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
-    [[nodiscard]] inline constexpr auto operator*(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
+    [[nodiscard]] inline auto operator*(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
     template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
-    [[nodiscard]] inline constexpr auto operator/(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
+    [[nodiscard]] inline auto operator/(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
 #pragma endregion
 
 #pragma region Integers
@@ -182,7 +182,7 @@ namespace fpn
     template<std::size_t IB, std::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator*(std::integral auto, fixed<IB, FB>) noexcept;
     template<std::size_t IB, std::size_t FB>
-    [[nodiscard]] inline constexpr fixed<IB, FB> operator/(std::integral auto, fixed<IB, FB>) noexcept;
+    [[nodiscard]] inline fixed<IB, FB> operator/(std::integral auto, fixed<IB, FB>) noexcept;
 
     template<std::size_t IB, std::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator%(fixed<IB, FB>, std::integral auto) noexcept;
@@ -214,6 +214,11 @@ namespace fpn
     using fixed32_16 = fixed<32, 16>;
     using fixed32_24 = fixed<32, 24>;
     using fixed32_32 = fixed<32, 32>;
+
+    using fixed48_8  = fixed<48,  8>;
+    using fixed48_16 = fixed<48, 16>;
+
+    using fixed56_8  = fixed<56,  8>;
 #else
     using fixed8_8  = fixed<8,  8>;
     using fixed8_16 = fixed<8, 16>;
@@ -232,8 +237,8 @@ namespace fpn
 template<std::size_t IB, std::size_t FB>
 struct std::hash<fpn::fixed<IB, FB>>
 {
-    [[nodiscard]] std::size_t operator()(const fpn::fixed<IB, FB>& value) const noexcept
+    [[nodiscard]] std::size_t constexpr operator()(const fpn::fixed<IB, FB>& value) const noexcept
     {
-        return value.Value;
+        return value.Value.Value;
     }
 };
