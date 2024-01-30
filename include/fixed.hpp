@@ -99,6 +99,7 @@ namespace fpn
 #pragma endregion
 
 #pragma region Mathematical constants
+#ifndef _WIN32 // Disabled as MSVC has several problems with this
         inline static const fixed e          = std::numbers::template e_v<double>;
         inline static const fixed log2e      = std::numbers::template log2e_v<double>;
         inline static const fixed log10e     = std::numbers::template log10e_v<double>;
@@ -111,6 +112,7 @@ namespace fpn
         inline static const fixed sqrt3      = std::numbers::template sqrt3_v<double>;
         inline static const fixed egamma     = std::numbers::template egamma_v<double>;
         inline static const fixed phi        = std::numbers::template phi_v<double>;
+#endif
 #pragma endregion
 
         /*
