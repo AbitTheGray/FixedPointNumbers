@@ -323,20 +323,13 @@ namespace fpn
 namespace fpn
 {
     template<std::size_t IB, std::size_t FB>
-    inline constexpr fixed<IB, FB>::fixed(const std::floating_point auto value) noexcept
+    inline FPN_CONSTEXPR fixed<IB, FB>::fixed(const std::floating_point auto value) noexcept
     {
-#if FPN_CONSTEXPR_HAS == 1
         if(std::isnan(value) || std::isinf(value))
             Value = {};
         else
             Value.Value = static_cast<typename ValueType::T>(std::round(value * BIT(FB)));
-#else
-        // Because MSVC does not have `constexpr` for `std::round`
-        if(std::isnan(value) || std::isinf(value))
-            Value = {};
-        else
-            Value.Value = static_cast<typename ValueType::T>(value * BIT(FB));
-#endif
+            //Value.Value = static_cast<typename ValueType::T>(value * BIT(FB));
     }
     template<std::size_t IB, std::size_t FB>
     template<typename TF>

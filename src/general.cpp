@@ -24,6 +24,7 @@ namespace fpn
     static_assert(fixed8_8( 2  ).IntegralValue().operator double() ==  2);
     static_assert(fixed8_8(-1  ).IntegralValue().operator double() == -1);
     static_assert(fixed8_8(-2  ).IntegralValue().operator double() == -2);
+#if FPN_CONSTEXPR_HAS == 1
     static_assert(fixed8_8( 0.5).IntegralValue().operator double() ==  0);
     static_assert(fixed8_8( 1.5).IntegralValue().operator double() ==  1);
     static_assert(fixed8_8( 2.5).IntegralValue().operator double() ==  2);
@@ -39,6 +40,7 @@ namespace fpn
     static_assert(fixed8_8(-0.5  ).FractionalValue().operator double() == 0.5);
     static_assert(fixed8_8(-0.875).FractionalValue().operator double() == 0.125);
     static_assert(fixed8_8(-1.0  ).FractionalValue().operator double() == 0.0);
+#endif
 #pragma endregion
 
 #pragma region Min + Max values

@@ -134,7 +134,7 @@ namespace fpn
 #pragma endregion
 
 #pragma region Floating-point numbers
-        inline constexpr explicit fixed(std::floating_point auto) noexcept;
+        inline FPN_CONSTEXPR explicit fixed(std::floating_point auto) noexcept;
 
         template<typename TF>
             requires std::floating_point<TF>

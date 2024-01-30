@@ -1,5 +1,6 @@
 #include "fixed.hpp"
 
+#if FPN_CONSTEXPR_HAS == 1
 namespace fpn
 {
     static_assert(fixed8_8(0.0f) == 0);
@@ -46,7 +47,7 @@ namespace fpn
     static_assert(static_cast<double>(fixed8_8(1.0625)) == 1.0625);
     static_assert(static_cast<double>(fixed8_8(2.0625)) == 2.0625);
 
-#if FPN_CONSTEXPR_HAS == 1 && __SIZEOF_POINTER__ >= 8
+#if __SIZEOF_POINTER__ >= 8
     static_assert(static_cast<double>(fixed32_16(0.1)) == 0.100'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(1.1)) == 1.100'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(2.1)) == 2.100'006'103'515'625);
@@ -68,7 +69,7 @@ namespace fpn
     static_assert(static_cast<double>(fixed8_8(1.5)) == 1.5);
     static_assert(static_cast<double>(fixed8_8(2.5)) == 2.5);
 
-#if FPN_CONSTEXPR_HAS == 1 && __SIZEOF_POINTER__ >= 8
+#if __SIZEOF_POINTER__ >= 8
     static_assert(static_cast<double>(fixed32_16(0.6)) == 0.600'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(1.6)) == 1.600'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(2.6)) == 2.600'006'103'515'625);
@@ -106,7 +107,7 @@ namespace fpn
     static_assert(static_cast<double>(fixed8_8(-1.0625)) == -1.0625);
     static_assert(static_cast<double>(fixed8_8(-2.0625)) == -2.0625);
 
-#if FPN_CONSTEXPR_HAS == 1 && __SIZEOF_POINTER__ >= 8
+#if __SIZEOF_POINTER__ >= 8
     static_assert(static_cast<double>(fixed32_16(-0.1)) == -0.100'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(-1.1)) == -1.100'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(-2.1)) == -2.100'006'103'515'625);
@@ -132,7 +133,7 @@ namespace fpn
     static_assert(static_cast<double>(fixed8_8(-1.5)) == -1.5);
     static_assert(static_cast<double>(fixed8_8(-2.5)) == -2.5);
 
-#if FPN_CONSTEXPR_HAS == 1 && __SIZEOF_POINTER__ >= 8
+#if __SIZEOF_POINTER__ >= 8
     static_assert(static_cast<double>(fixed32_16(-0.6)) == -0.600'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(-1.6)) == -1.600'006'103'515'625);
     static_assert(static_cast<double>(fixed32_16(-2.6)) == -2.600'006'103'515'625);
@@ -158,3 +159,4 @@ namespace fpn
     static_assert(-fixed8_8(1.0)  == -1);
     static_assert(-fixed8_8(-1.0) == 1);
 }
+#endif

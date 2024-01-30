@@ -69,6 +69,7 @@ namespace fpn
     //TODO
 #pragma endregion
 #pragma region Nearest integer operations
+#if FPN_CONSTEXPR_HAS == 1
     static_assert(floor(fixed8_8(0))    == 0);
     static_assert(floor(fixed8_8(0.1))  == 0);
     static_assert(floor(fixed8_8(0.5))  == 0);
@@ -108,5 +109,6 @@ namespace fpn
     static_assert(round(fixed8_8(-0.5)) == -1);
     static_assert(round(fixed8_8(-0.9)) == -1);
     static_assert(round(fixed8_8(-1))   == -1);
+#endif
 #pragma endregion
 }
