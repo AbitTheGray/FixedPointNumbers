@@ -248,6 +248,19 @@ namespace fpn
     template<std::size_t IB, std::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> round(fixed<IB, FB>) noexcept;
 #pragma endregion
+
+#pragma region Radians + Degrees
+    /**
+     * Converts radians to degrees
+     */
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline FPN_CONSTEXPR fixed<IB, FB> degrees(fixed<IB, FB>) noexcept;
+    /**
+     * Converts degrees to radians
+     */
+    template<std::size_t IB, std::size_t FB>
+    [[nodiscard]] inline FPN_CONSTEXPR fixed<IB, FB> radians(fixed<IB, FB>) noexcept;
+#pragma endregion
 }
 
 #include "fixed_math.inl"

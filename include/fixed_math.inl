@@ -287,3 +287,16 @@ namespace fpn
         return floor(value);
     }
 }
+namespace fpn
+{
+    template<std::size_t IB, std::size_t FB>
+    inline FPN_CONSTEXPR fixed<IB, FB> degrees(const fixed<IB, FB> radians) noexcept
+    {
+        return radians * std::numbers::template pi_v<double> / 180;
+    }
+    template<std::size_t IB, std::size_t FB>
+    inline FPN_CONSTEXPR fixed<IB, FB> radians(const fixed<IB, FB> degrees) noexcept
+    {
+        return degrees / std::numbers::template pi_v<double> * 180;
+    }
+}
