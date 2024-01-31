@@ -54,7 +54,7 @@ namespace fpn
         inline explicit constexpr fixed(
             typename integer_bits<IntegralBits>::signed_type     integralValue,
             typename integer_bits<FractionalBits>::unsigned_type fractionalValue
-        ) noexcept;
+        );
         template<std::size_t IB2, std::size_t FB2>
         inline explicit constexpr fixed(fixed<IB2, FB2>) noexcept;
 
@@ -76,11 +76,11 @@ namespace fpn
         /**
          * Raw representation of the integral part of this number.
          */
-        [[nodiscard]] [[deprecated]] inline constexpr typename integer_bits<IntegralBits>::signed_type IntegralPart() const noexcept;
+        [[nodiscard]] inline constexpr typename integer_bits<IntegralBits>::signed_type IntegralPart() const noexcept;
         /**
          * Raw representation of the fractional part of this number.
          */
-        [[nodiscard]] [[deprecated]] inline constexpr typename integer_bits<FractionalBits>::unsigned_type FractionalPart() const noexcept;
+        [[nodiscard]] inline constexpr typename integer_bits<FractionalBits>::unsigned_type FractionalPart() const noexcept;
         /**
          * Integral part only.
          * @warning For negative values with fractional part, the value is as if rounded away from zero ( -1.5 becomes -2 )
@@ -150,7 +150,7 @@ namespace fpn
     template<std::size_t IB, std::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator-(fixed<IB, FB>, fixed<IB, FB>) noexcept;
     template<std::size_t IB, std::size_t FB>
-    [[nodiscard]] inline fixed<IB, FB> operator*(fixed<IB, FB>, fixed<IB, FB>) noexcept;
+    [[nodiscard]] inline constexpr fixed<IB, FB> operator*(fixed<IB, FB>, fixed<IB, FB>) noexcept;
     template<std::size_t IB, std::size_t FB>
     [[nodiscard]] inline fixed<IB, FB> operator/(fixed<IB, FB>, fixed<IB, FB>) noexcept;
 
@@ -163,7 +163,7 @@ namespace fpn
     template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
     [[nodiscard]] inline constexpr auto operator-(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
     template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
-    [[nodiscard]] inline auto operator*(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
+    [[nodiscard]] inline constexpr auto operator*(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
     template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
     [[nodiscard]] inline auto operator/(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
 #pragma endregion

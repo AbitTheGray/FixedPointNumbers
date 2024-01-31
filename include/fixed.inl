@@ -2,6 +2,7 @@
 #include "fixed.hpp"
 
 #include <cmath>
+#include <stdexcept>
 
 // Utility functions
 namespace fpn
@@ -71,23 +72,35 @@ namespace fpn
 // Constructors
 namespace fpn
 {
-    template <std::size_t IntegralBits, std::size_t FractionalBits>
+    template<std::size_t IntegralBits, std::size_t FractionalBits>
     inline constexpr fixed<IntegralBits, FractionalBits>::fixed(const ValueType value) noexcept
       : Value({TruncateBits_Signed(value.Value, IntegralBits + FractionalBits)})
     //  : Value(value)
     {
     }
-    template <std::size_t IntegralBits, std::size_t FractionalBits>
+    template<std::size_t IntegralBits, std::size_t FractionalBits>
     inline constexpr fixed<IntegralBits, FractionalBits>::fixed(
         const typename integer_bits<IntegralBits>::signed_type     integralValue,
         const typename integer_bits<FractionalBits>::unsigned_type fractionalValue
-    ) noexcept
-      : Value({(integralValue << IntegralBits) + fractionalValue})
+    )
+      : Value({static_cast<typename ValueType::T>((integralValue << IntegralBits) | fractionalValue)})
     {
-        assert(integralValue   < BIT<std::size_t>(IntegralBits   + 1u));
-        assert(fractionalValue < BIT<std::size_t>(FractionalBits + 1u));
+        if(integralValue != TruncateBits_Signed(integralValue, IntegralBits))
+        {
+            if(std::is_constant_evaluated())
+                Value = 0;
+            else
+                throw std::runtime_error("Too big integral value");
+        }
+        if(fractionalValue != (fractionalValue & BITS(FractionalBits)))
+        {
+            if(std::is_constant_evaluated())
+                Value = 0;
+            else
+                throw std::runtime_error("Too big fractional value");
+        }
     }
-    template <std::size_t IntegralBits, std::size_t FractionalBits>
+    template<std::size_t IntegralBits, std::size_t FractionalBits>
     template<std::size_t IB2, std::size_t FB2>
     inline constexpr fixed<IntegralBits, FractionalBits>::fixed(const fixed<IB2, FB2> other) noexcept
     {
@@ -128,7 +141,7 @@ namespace fpn
     template<std::size_t IB, std::size_t FB>
     [[nodiscard]] inline constexpr typename integer_bits<FB>::unsigned_type fixed<IB, FB>::FractionalPart() const noexcept
     {
-        return static_cast<typename integer_bits<FB>::unsigned_type>(Value.Value & BITS(FB));
+        return static_cast<typename integer_bits<FB>::unsigned_type>(Value.Value) & BITS(FB);
     }
     template<std::size_t IB, std::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> fixed<IB, FB>::IntegralValue() const noexcept
@@ -181,9 +194,29 @@ namespace fpn
         );
     }
     template<std::size_t IB, std::size_t FB>
-    inline fixed<IB, FB> operator*(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
+    inline constexpr fixed<IB, FB> operator*(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
     {
-        return static_cast<double>(left) * static_cast<double>(right); //TODO Without floating-point math
+        // Best visualization of this algorithm can be found at https://i.stack.imgur.com/oOMA8.png / https://stackoverflow.com/a/75718789
+        using T = typename fixed<IB, FB>::ValueType::T;
+        using UT = std::make_unsigned_t<T>;
+
+        const auto leftI = static_cast<T>(left.IntegralPart());
+        const auto rightI = static_cast<T>(right.IntegralPart());
+        const auto leftF = static_cast<UT>(left.FractionalPart());
+        const auto rightF = static_cast<UT>(right.FractionalPart());
+
+        const auto a = (leftF * rightF) >> FB;
+        const auto b = leftI * rightF;
+        const auto c = rightI * leftF;
+        const auto d = TruncateBits_Signed(leftI * rightI, IB) << FB;
+
+        return fixed<IB, FB>(
+            typename fixed<IB, FB>::ValueType{
+                static_cast<typename fixed<IB, FB>::ValueType::T>(
+                    a + b + c + d
+                )
+            }
+        );
     }
     template<std::size_t IB, std::size_t FB>
     inline fixed<IB, FB> operator/(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
@@ -213,7 +246,7 @@ namespace fpn
         return fixed<IB, FB>(left) - fixed<IB, FB>(right);
     }
     template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
-    inline auto operator*(const fixed<IB1, FB1> left, const fixed<IB2, FB2> right) noexcept
+    inline constexpr auto operator*(const fixed<IB1, FB1> left, const fixed<IB2, FB2> right) noexcept
     {
         static_assert(IB1 != IB2 || FB1 != FB2);
         const std::size_t IB = IB1 > IB2 ? IB1 : IB2; // std::max(IB1, IB2)
@@ -240,7 +273,7 @@ namespace fpn
     {
     }
     template<std::size_t IB, std::size_t FB>
-    template <typename TI> requires std::integral<TI>
+    template<typename TI> requires std::integral<TI>
     inline constexpr fixed<IB, FB>::operator TI() const noexcept
     {
         return static_cast<TI>(Value.Value >> FB);
@@ -307,7 +340,7 @@ namespace fpn
     {
         return fixed<IB, FB>(left) / right;
     }
-    template <std::size_t IB, std::size_t FB>
+    template<std::size_t IB, std::size_t FB>
     constexpr fixed<IB, FB> operator%(const fixed<IB, FB> left, const std::integral auto right) noexcept
     {
         return fixed<IB, FB>(
