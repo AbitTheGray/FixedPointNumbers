@@ -65,7 +65,7 @@ namespace fpn
     };
 #endif
 /*
-#ifdef __int128
+#ifdef __SIZEOF_INT128__
     template<>
         requires sizeof(std::size_t) >= sizeof(__int128)
     struct integer_bits<128>

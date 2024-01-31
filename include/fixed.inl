@@ -219,9 +219,101 @@ namespace fpn
         );
     }
     template<std::size_t IB, std::size_t FB>
-    inline fixed<IB, FB> operator/(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
+    inline constexpr fixed<IB, FB> operator/(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
     {
-        return static_cast<long double>(left) / static_cast<long double>(right); //TODO Without floating-point math
+        /*
+        return fixed<IB, FB>(
+            typename fixed<IB, FB>::ValueType{
+                static_cast<typename fixed<IB, FB>::ValueType::T>(
+                    left.Value.Value / right.Value.Value
+                )
+            }
+        );
+        */
+        if constexpr(IB + FB * 2 <= sizeof(std::size_t) * 8) // Can use higher integer
+        {
+            using HigherT = typename integer_bits<IB + FB * 2>::signed_type;
+
+            return fixed<IB, FB>(
+                typename fixed<IB, FB>::ValueType{
+                    static_cast<typename fixed<IB, FB>::ValueType::T>(
+                        (
+                            static_cast<HigherT>(left.Value.Value) << FB
+                        ) / right.Value.Value
+                    )
+                }
+            );
+        }
+        else if constexpr(IB + FB * 2 <= sizeof(int64_t) * 8)
+        {
+            using HigherT = int64_t;
+
+            return fixed<IB, FB>(
+                typename fixed<IB, FB>::ValueType{
+                    static_cast<typename fixed<IB, FB>::ValueType::T>(
+                        (
+                            static_cast<HigherT>(left.Value.Value) << FB
+                        ) / right.Value.Value
+                    )
+                }
+            );
+        }
+#ifdef __SIZEOF_INT128__
+        else if constexpr(IB + FB * 2 <= sizeof(__int128) * 8)
+        {
+            using HigherT = __int128;
+
+            return fixed<IB, FB>(
+                typename fixed<IB, FB>::ValueType{
+                    static_cast<typename fixed<IB, FB>::ValueType::T>(
+                        (
+                            static_cast<HigherT>(left.Value.Value) << FB
+                        ) / right.Value.Value
+                    )
+                }
+            );
+        }
+#endif
+        else
+        {
+            using T = typename fixed<IB, FB>::ValueType::T;
+            T absLeft = abs(left).Value.Value;
+            T absRight = abs(right).Value.Value;
+            T value = 0;
+
+            // This is not an optimal way but it is working without support for 128-bit integer (on 64-bit systems).
+            // If you are using a type afected by this, it is recommended to use a library for 128-bit integer and define both `__int128` (typedef?) and `__SIZEOF_INT128__`=16
+            for(std::size_t bit = 0; bit < IB + FB; bit++)
+            {
+                if(absRight & BIT(bit))
+                {
+                    if(bit >= FB)
+                        value += absLeft >> (bit - FB);
+                    else
+                        value += absLeft << (FB - bit);
+                }
+            }
+
+            fixed<IB, FB> outValue = fixed<IB, FB>( typename fixed<IB, FB>::ValueType{ value } );
+
+            return (left >= 0) == (right >= 0) ? outValue : -outValue;
+        }
+    }
+    template<std::size_t IB, std::size_t FB> requires (FB * 2 < sizeof(typename fixed<IB, FB>::ValueType::T) * 8)
+    inline constexpr fixed<IB, FB> Inverse(const fixed<IB, FB> value) noexcept
+    {
+        using T = typename fixed<IB, FB>::ValueType::T;
+        using UT = std::make_unsigned_t<T>;
+        return fixed<IB, FB>(
+            typename fixed<IB, FB>::ValueType{
+                static_cast<T>(BIT<UT>(FB + FB)) / value.Value.Value
+            }
+        );
+    }
+    template<std::size_t IB, std::size_t FB>
+    inline constexpr fixed<IB, FB> Inverse(const fixed<IB, FB> value) noexcept
+    {
+        return 1 / value;
     }
 }
 // Different fixed-point mathematical operators
@@ -255,7 +347,7 @@ namespace fpn
         return fixed<IB, FB>(left) * fixed<IB, FB>(right);
     }
     template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
-    inline auto operator/(const fixed<IB1, FB1> left, const fixed<IB2, FB2> right) noexcept
+    inline constexpr auto operator/(const fixed<IB1, FB1> left, const fixed<IB2, FB2> right) noexcept
     {
         static_assert(IB1 != IB2 || FB1 != FB2);
         const std::size_t IB = IB1 > IB2 ? IB1 : IB2; // std::max(IB1, IB2)
@@ -336,12 +428,12 @@ namespace fpn
         );
     }
     template<std::size_t IB, std::size_t FB>
-    inline fixed<IB, FB> operator/(const std::integral auto left, const fixed<IB, FB> right) noexcept
+    inline constexpr fixed<IB, FB> operator/(const std::integral auto left, const fixed<IB, FB> right) noexcept
     {
         return fixed<IB, FB>(left) / right;
     }
     template<std::size_t IB, std::size_t FB>
-    constexpr fixed<IB, FB> operator%(const fixed<IB, FB> left, const std::integral auto right) noexcept
+    inline constexpr fixed<IB, FB> operator%(const fixed<IB, FB> left, const std::integral auto right) noexcept
     {
         return fixed<IB, FB>(
             typename fixed<IB, FB>::ValueType{
