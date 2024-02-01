@@ -260,9 +260,9 @@ namespace std
     template<fpn::size_t IB, fpn::size_t FB>
     struct hash<fpn::fixed<IB, FB>>
     {
-        [[nodiscard]] fpn::size_t constexpr operator()(const fpn::fixed<IB, FB>& value) const noexcept
+        [[nodiscard]] std::size_t constexpr operator()(const fpn::fixed<IB, FB>& value) const noexcept
         {
-            return value.Value.Value;
+            return static_cast<std::size_t>(value.Value.Value);
         }
     };
     template<fpn::size_t IB, fpn::size_t FB>
