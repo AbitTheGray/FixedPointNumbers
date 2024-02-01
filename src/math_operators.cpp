@@ -326,7 +326,6 @@ namespace fpn
     static_assert(fixed16_16(2) / fixed16_16(1) == 2);
     static_assert((fixed16_16(1) / fixed16_16(2)).operator double() == 0.5);
 #pragma endregion
-#if __SIZEOF_POINTER__ >= 8
 #pragma region fixed32_16
     static_assert(fixed32_16(1) / fixed32_16(1) == 1);
     static_assert(fixed32_16(2) / fixed32_16(1) == 2);
@@ -337,7 +336,6 @@ namespace fpn
     static_assert(fixed32_32(2) / fixed32_32(1) == 2);
     static_assert((fixed32_32(1) / fixed32_32(2)).operator double() == 0.5);
 #pragma endregion
-#endif
 }
 
 // Division (integer + decimal, decimals)
@@ -438,7 +436,6 @@ namespace fpn
     static_assert(Inverse(fixed16_16(0.125 )) ==  8);
     static_assert(Inverse(fixed16_16(0.0625)) == 16);
 #pragma endregion
-#if __SIZEOF_POINTER__ >= 8
 #pragma region fixed32_16
     static_assert(Inverse(fixed32_16( 1)) == 1     );
     static_assert(Inverse(fixed32_16( 2)) == 0.5   );
@@ -463,6 +460,5 @@ namespace fpn
     static_assert(Inverse(fixed32_32(0.125 )) ==  8);
     static_assert(Inverse(fixed32_32(0.0625)) == 16);
 #pragma endregion
-#endif
 }
 #endif

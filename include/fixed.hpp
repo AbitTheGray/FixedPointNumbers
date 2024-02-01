@@ -21,7 +21,7 @@ namespace fpn
     /**
      * Fixed-point numbers.
      */
-    template<std::size_t IntegralBits, std::size_t FractionalBits>
+    template<fpn::size_t IntegralBits, fpn::size_t FractionalBits>
     struct fixed
     {
         static_assert(IntegralBits > 1);
@@ -55,7 +55,7 @@ namespace fpn
             typename integer_bits<IntegralBits>::signed_type     integralValue,
             typename integer_bits<FractionalBits>::unsigned_type fractionalValue
         );
-        template<std::size_t IB2, std::size_t FB2>
+        template<fpn::size_t IB2, fpn::size_t FB2>
         inline explicit constexpr fixed(fixed<IB2, FB2>) noexcept;
 
         // Copy
@@ -145,59 +145,58 @@ namespace fpn
 #pragma endregion
     };
 
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator+(fixed<IB, FB>, fixed<IB, FB>) noexcept;
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator-(fixed<IB, FB>, fixed<IB, FB>) noexcept;
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator*(fixed<IB, FB>, fixed<IB, FB>) noexcept;
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator/(fixed<IB, FB>, fixed<IB, FB>) noexcept;
 
     /**
      * Calculate 1/x
      */
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> Inverse(fixed<IB, FB>) noexcept;
 
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline std::string to_string(fixed<IB, FB>);
 
 #pragma region Other fixed-point numbers
-    template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
+    template<fpn::size_t IB1, fpn::size_t FB1, fpn::size_t IB2, fpn::size_t FB2>
     [[nodiscard]] inline constexpr auto operator+(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
-    template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
+    template<fpn::size_t IB1, fpn::size_t FB1, fpn::size_t IB2, fpn::size_t FB2>
     [[nodiscard]] inline constexpr auto operator-(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
-    template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
+    template<fpn::size_t IB1, fpn::size_t FB1, fpn::size_t IB2, fpn::size_t FB2>
     [[nodiscard]] inline constexpr auto operator*(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
-    template<std::size_t IB1, std::size_t FB1, std::size_t IB2, std::size_t FB2>
+    template<fpn::size_t IB1, fpn::size_t FB1, fpn::size_t IB2, fpn::size_t FB2>
     [[nodiscard]] inline constexpr auto operator/(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
 #pragma endregion
 
 #pragma region Integers
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator+(fixed<IB, FB>, std::integral auto) noexcept;
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator-(fixed<IB, FB>, std::integral auto) noexcept;
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator*(fixed<IB, FB>, std::integral auto) noexcept;
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator/(fixed<IB, FB>, std::integral auto) noexcept;
 
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator+(std::integral auto, fixed<IB, FB>) noexcept;
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator-(std::integral auto, fixed<IB, FB>) noexcept;
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator*(std::integral auto, fixed<IB, FB>) noexcept;
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator/(std::integral auto, fixed<IB, FB>) noexcept;
 
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline constexpr fixed<IB, FB> operator%(fixed<IB, FB>, std::integral auto) noexcept;
 #pragma endregion
 
-#if __SIZEOF_POINTER__ >= 8
     using fixed8_8  = fixed<8,  8>;
     using fixed8_16 = fixed<8, 16>;
     using fixed8_24 = fixed<8, 24>;
@@ -232,24 +231,14 @@ namespace fpn
     using fixed48_16 = fixed<48, 16>; // Slow division
 
     using fixed56_8  = fixed<56,  8>; // Slow division
-#else
-    using fixed8_8  = fixed<8,  8>;
-    using fixed8_16 = fixed<8, 16>;
-    using fixed8_24 = fixed<8, 24>;
-
-    using fixed16_8  = fixed<16,  8>;
-    using fixed16_16 = fixed<16, 16>;
-
-    using fixed24_8  = fixed<24, 8>;
-#endif
 }
 
 #include "fixed.inl"
 
-template<std::size_t IB, std::size_t FB>
+template<fpn::size_t IB, fpn::size_t FB>
 struct std::hash<fpn::fixed<IB, FB>>
 {
-    [[nodiscard]] std::size_t constexpr operator()(const fpn::fixed<IB, FB>& value) const noexcept
+    [[nodiscard]] fpn::size_t constexpr operator()(const fpn::fixed<IB, FB>& value) const noexcept
     {
         return value.Value.Value;
     }

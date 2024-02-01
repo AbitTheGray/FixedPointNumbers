@@ -3,7 +3,6 @@
 // Important
 namespace fpn
 {
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed8_8()  == 0);
     static_assert(fixed8_16() == 0);
     static_assert(fixed8_24() == 0);
@@ -38,16 +37,6 @@ namespace fpn
     static_assert(fixed48_16() == 0);
 
     static_assert(fixed56_8() == 0);
-#else
-    static_assert(fixed8_8()  == 0);
-    static_assert(fixed8_16() == 0);
-    static_assert(fixed8_24() == 0);
-
-    static_assert(fixed16_8()  == 0);
-    static_assert(fixed16_16() == 0);
-
-    static_assert(fixed24_8() == 0);
-#endif
 }
 
 // 2
@@ -83,7 +72,6 @@ namespace fpn
     static_assert(fixed<2, 28>() == 0);
     static_assert(fixed<2, 29>() == 0);
     static_assert(fixed<2, 30>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<2, 31>() == 0);
     static_assert(fixed<2, 32>() == 0);
     static_assert(fixed<2, 33>() == 0);
@@ -116,7 +104,6 @@ namespace fpn
     static_assert(fixed<2, 60>() == 0);
     static_assert(fixed<2, 61>() == 0);
     static_assert(fixed<2, 62>() == 0);
-#endif
 }
 // 3
 namespace fpn
@@ -150,7 +137,6 @@ namespace fpn
     static_assert(fixed<3, 27>() == 0);
     static_assert(fixed<3, 28>() == 0);
     static_assert(fixed<3, 29>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<3, 30>() == 0);
     static_assert(fixed<3, 31>() == 0);
     static_assert(fixed<3, 32>() == 0);
@@ -183,7 +169,6 @@ namespace fpn
     static_assert(fixed<3, 59>() == 0);
     static_assert(fixed<3, 60>() == 0);
     static_assert(fixed<3, 61>() == 0);
-#endif
 }
 // 4
 namespace fpn
@@ -216,7 +201,6 @@ namespace fpn
     static_assert(fixed<4, 26>() == 0);
     static_assert(fixed<4, 27>() == 0);
     static_assert(fixed<4, 28>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<4, 29>() == 0);
     static_assert(fixed<4, 30>() == 0);
     static_assert(fixed<4, 31>() == 0);
@@ -249,7 +233,6 @@ namespace fpn
     static_assert(fixed<4, 58>() == 0);
     static_assert(fixed<4, 59>() == 0);
     static_assert(fixed<4, 60>() == 0);
-#endif
 }
 // 5
 namespace fpn
@@ -281,7 +264,6 @@ namespace fpn
     static_assert(fixed<5, 25>() == 0);
     static_assert(fixed<5, 26>() == 0);
     static_assert(fixed<5, 27>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<5, 28>() == 0);
     static_assert(fixed<5, 29>() == 0);
     static_assert(fixed<5, 30>() == 0);
@@ -314,7 +296,6 @@ namespace fpn
     static_assert(fixed<5, 57>() == 0);
     static_assert(fixed<5, 58>() == 0);
     static_assert(fixed<5, 59>() == 0);
-#endif
 }
 // 6
 namespace fpn
@@ -345,7 +326,6 @@ namespace fpn
     static_assert(fixed<6, 24>() == 0);
     static_assert(fixed<6, 25>() == 0);
     static_assert(fixed<6, 26>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<6, 27>() == 0);
     static_assert(fixed<6, 28>() == 0);
     static_assert(fixed<6, 29>() == 0);
@@ -378,7 +358,6 @@ namespace fpn
     static_assert(fixed<6, 56>() == 0);
     static_assert(fixed<6, 57>() == 0);
     static_assert(fixed<6, 58>() == 0);
-#endif
 }
 // 7
 namespace fpn
@@ -408,7 +387,6 @@ namespace fpn
     static_assert(fixed<7, 23>() == 0);
     static_assert(fixed<7, 24>() == 0);
     static_assert(fixed<7, 25>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<7, 26>() == 0);
     static_assert(fixed<7, 27>() == 0);
     static_assert(fixed<7, 28>() == 0);
@@ -441,7 +419,6 @@ namespace fpn
     static_assert(fixed<7, 55>() == 0);
     static_assert(fixed<7, 56>() == 0);
     static_assert(fixed<7, 57>() == 0);
-#endif
 }
 // 8
 namespace fpn
@@ -470,7 +447,6 @@ namespace fpn
     static_assert(fixed<8, 22>() == 0);
     static_assert(fixed<8, 23>() == 0);
     static_assert(fixed<8, 24>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<8, 25>() == 0);
     static_assert(fixed<8, 26>() == 0);
     static_assert(fixed<8, 27>() == 0);
@@ -503,7 +479,6 @@ namespace fpn
     static_assert(fixed<8, 54>() == 0);
     static_assert(fixed<8, 55>() == 0);
     static_assert(fixed<8, 56>() == 0);
-#endif
 }
 // 9
 namespace fpn
@@ -531,7 +506,6 @@ namespace fpn
     static_assert(fixed<9, 21>() == 0);
     static_assert(fixed<9, 22>() == 0);
     static_assert(fixed<9, 23>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<9, 24>() == 0);
     static_assert(fixed<9, 25>() == 0);
     static_assert(fixed<9, 26>() == 0);
@@ -564,7 +538,6 @@ namespace fpn
     static_assert(fixed<9, 53>() == 0);
     static_assert(fixed<9, 54>() == 0);
     static_assert(fixed<9, 55>() == 0);
-#endif
 }
 // 10
 namespace fpn
@@ -591,7 +564,6 @@ namespace fpn
     static_assert(fixed<10, 20>() == 0);
     static_assert(fixed<10, 21>() == 0);
     static_assert(fixed<10, 22>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<10, 23>() == 0);
     static_assert(fixed<10, 24>() == 0);
     static_assert(fixed<10, 25>() == 0);
@@ -624,7 +596,6 @@ namespace fpn
     static_assert(fixed<10, 52>() == 0);
     static_assert(fixed<10, 53>() == 0);
     static_assert(fixed<10, 54>() == 0);
-#endif
 }
 // 11
 namespace fpn
@@ -650,7 +621,6 @@ namespace fpn
     static_assert(fixed<11, 19>() == 0);
     static_assert(fixed<11, 20>() == 0);
     static_assert(fixed<11, 21>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<11, 22>() == 0);
     static_assert(fixed<11, 23>() == 0);
     static_assert(fixed<11, 24>() == 0);
@@ -683,7 +653,6 @@ namespace fpn
     static_assert(fixed<11, 51>() == 0);
     static_assert(fixed<11, 52>() == 0);
     static_assert(fixed<11, 53>() == 0);
-#endif
 }
 // 12
 namespace fpn
@@ -708,7 +677,6 @@ namespace fpn
     static_assert(fixed<12, 18>() == 0);
     static_assert(fixed<12, 19>() == 0);
     static_assert(fixed<12, 20>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<12, 21>() == 0);
     static_assert(fixed<12, 22>() == 0);
     static_assert(fixed<12, 23>() == 0);
@@ -741,7 +709,6 @@ namespace fpn
     static_assert(fixed<12, 50>() == 0);
     static_assert(fixed<12, 51>() == 0);
     static_assert(fixed<12, 52>() == 0);
-#endif
 }
 // 13
 namespace fpn
@@ -765,7 +732,6 @@ namespace fpn
     static_assert(fixed<13, 17>() == 0);
     static_assert(fixed<13, 18>() == 0);
     static_assert(fixed<13, 19>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<13, 20>() == 0);
     static_assert(fixed<13, 21>() == 0);
     static_assert(fixed<13, 22>() == 0);
@@ -798,7 +764,6 @@ namespace fpn
     static_assert(fixed<13, 49>() == 0);
     static_assert(fixed<13, 50>() == 0);
     static_assert(fixed<13, 51>() == 0);
-#endif
 }
 // 14
 namespace fpn
@@ -821,7 +786,6 @@ namespace fpn
     static_assert(fixed<14, 16>() == 0);
     static_assert(fixed<14, 17>() == 0);
     static_assert(fixed<14, 18>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<14, 19>() == 0);
     static_assert(fixed<14, 20>() == 0);
     static_assert(fixed<14, 21>() == 0);
@@ -854,7 +818,6 @@ namespace fpn
     static_assert(fixed<14, 48>() == 0);
     static_assert(fixed<14, 49>() == 0);
     static_assert(fixed<14, 50>() == 0);
-#endif
 }
 // 15
 namespace fpn
@@ -876,7 +839,6 @@ namespace fpn
     static_assert(fixed<15, 15>() == 0);
     static_assert(fixed<15, 16>() == 0);
     static_assert(fixed<15, 17>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<15, 18>() == 0);
     static_assert(fixed<15, 19>() == 0);
     static_assert(fixed<15, 20>() == 0);
@@ -909,7 +871,6 @@ namespace fpn
     static_assert(fixed<15, 47>() == 0);
     static_assert(fixed<15, 48>() == 0);
     static_assert(fixed<15, 49>() == 0);
-#endif
 }
 // 16
 namespace fpn
@@ -930,7 +891,6 @@ namespace fpn
     static_assert(fixed<16, 14>() == 0);
     static_assert(fixed<16, 15>() == 0);
     static_assert(fixed<16, 16>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<16, 17>() == 0);
     static_assert(fixed<16, 18>() == 0);
     static_assert(fixed<16, 19>() == 0);
@@ -963,7 +923,6 @@ namespace fpn
     static_assert(fixed<16, 46>() == 0);
     static_assert(fixed<16, 47>() == 0);
     static_assert(fixed<16, 48>() == 0);
-#endif
 }
 // 17
 namespace fpn
@@ -983,7 +942,6 @@ namespace fpn
     static_assert(fixed<17, 13>() == 0);
     static_assert(fixed<17, 14>() == 0);
     static_assert(fixed<17, 15>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<17, 16>() == 0);
     static_assert(fixed<17, 17>() == 0);
     static_assert(fixed<17, 18>() == 0);
@@ -1016,7 +974,6 @@ namespace fpn
     static_assert(fixed<17, 45>() == 0);
     static_assert(fixed<17, 46>() == 0);
     static_assert(fixed<17, 47>() == 0);
-#endif
 }
 // 18
 namespace fpn
@@ -1035,7 +992,6 @@ namespace fpn
     static_assert(fixed<18, 12>() == 0);
     static_assert(fixed<18, 13>() == 0);
     static_assert(fixed<18, 14>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<18, 15>() == 0);
     static_assert(fixed<18, 16>() == 0);
     static_assert(fixed<18, 17>() == 0);
@@ -1068,7 +1024,6 @@ namespace fpn
     static_assert(fixed<18, 44>() == 0);
     static_assert(fixed<18, 45>() == 0);
     static_assert(fixed<18, 46>() == 0);
-#endif
 }
 // 19
 namespace fpn
@@ -1086,7 +1041,6 @@ namespace fpn
     static_assert(fixed<19, 11>() == 0);
     static_assert(fixed<19, 12>() == 0);
     static_assert(fixed<19, 13>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<19, 14>() == 0);
     static_assert(fixed<19, 15>() == 0);
     static_assert(fixed<19, 16>() == 0);
@@ -1119,7 +1073,6 @@ namespace fpn
     static_assert(fixed<19, 43>() == 0);
     static_assert(fixed<19, 44>() == 0);
     static_assert(fixed<19, 45>() == 0);
-#endif
 }
 // 19
 namespace fpn
@@ -1136,7 +1089,6 @@ namespace fpn
     static_assert(fixed<20, 10>() == 0);
     static_assert(fixed<20, 11>() == 0);
     static_assert(fixed<20, 12>() == 0);
-#if __SIZEOF_POINTER__ >= 8
     static_assert(fixed<20, 13>() == 0);
     static_assert(fixed<20, 14>() == 0);
     static_assert(fixed<20, 15>() == 0);
@@ -1169,7 +1121,6 @@ namespace fpn
     static_assert(fixed<20, 42>() == 0);
     static_assert(fixed<20, 43>() == 0);
     static_assert(fixed<20, 44>() == 0);
-#endif
 }
 
 //TODO Add the rest of posible values

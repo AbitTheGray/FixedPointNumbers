@@ -76,7 +76,6 @@ namespace fpn
     static_assert(fixed8_24(-2.125) == fixed8_24(fixed8_8(-2.125)));
 #endif
 }
-#if __SIZEOF_POINTER__ >= 8
 // fixed8_8 <-> fixed8_56
 namespace fpn
 {
@@ -115,7 +114,6 @@ namespace fpn
     static_assert(fixed8_56(-2.125) == fixed8_56(fixed8_8(-2.125)));
 #endif
 }
-#endif
 // fixed8_8 <-> fixed24_8
 namespace fpn
 {
@@ -154,7 +152,6 @@ namespace fpn
     static_assert(fixed24_8(-2.125) == fixed24_8(fixed8_8(-2.125)));
 #endif
 }
-#if __SIZEOF_POINTER__ >= 8
 // fixed8_8 <-> fixed56_8
 namespace fpn
 {
@@ -193,4 +190,3 @@ namespace fpn
     static_assert(fixed56_8(-2.125) == fixed56_8(fixed8_8(-2.125)));
 #endif
 }
-#endif

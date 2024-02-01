@@ -2,7 +2,9 @@
 
 namespace fpn
 {
-    template<std::size_t T>
+    using size_t = uint64_t;
+    
+    template<fpn::size_t T>
     struct integer_bits
     {
         using type          = typename integer_bits<T + 1>::type;
@@ -50,7 +52,6 @@ namespace fpn
 
         integer_bits() = delete;
     };
-#if __SIZEOF_POINTER__ >= 8
     template<>
     struct integer_bits<64>
     {
@@ -61,13 +62,12 @@ namespace fpn
 
         integer_bits() = delete;
 
-        static_assert(sizeof(std::size_t) >= sizeof(uint64_t));
+        static_assert(sizeof(fpn::size_t) >= sizeof(uint64_t));
     };
-#endif
 /*
 #ifdef __SIZEOF_INT128__
     template<>
-        requires sizeof(std::size_t) >= sizeof(__int128)
+        requires sizeof(fpn::size_t) >= sizeof(__int128)
     struct integer_bits<128>
     {
         using type          = __int128;
@@ -77,7 +77,7 @@ namespace fpn
 
         integer_bits() = delete;
 
-        static_assert(sizeof(std::size_t) >= sizeof(__int128));
+        static_assert(sizeof(fpn::size_t) >= sizeof(__int128));
     };
 #endif
 */

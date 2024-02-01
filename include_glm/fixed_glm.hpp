@@ -2,7 +2,6 @@
 #include "fixed.hpp"
 #include "glm/glm.hpp"
 
-#if __SIZEOF_POINTER__ >= 8
 namespace glm
 {
     using f8_8vec1  = vec<1, fpn::fixed8_8>;
@@ -262,82 +261,3 @@ namespace glm
 
     using f56_8mat4  = mat<4, 4, fpn::fixed56_8>;
 }
-#else
-namespace glm
-{
-    using f8_8vec1  = vec<1, fpn::fixed8_8>;
-    using f8_16vec1 = vec<1, fpn::fixed8_16>;
-    using f8_24vec1 = vec<1, fpn::fixed8_24>;
-
-    using f16_8vec1  = vec<1, fpn::fixed16_8>;
-    using f16_16vec1 = vec<1, fpn::fixed16_16>;
-
-    using f24_8vec1  = vec<1, fpn::fixed24_8>;
-}
-namespace glm
-{
-    using f8_8vec2  = vec<2, fpn::fixed8_8>;
-    using f8_16vec2 = vec<2, fpn::fixed8_16>;
-    using f8_24vec2 = vec<2, fpn::fixed8_24>;
-
-    using f16_8vec2  = vec<2, fpn::fixed16_8>;
-    using f16_16vec2 = vec<2, fpn::fixed16_16>;
-
-    using f24_8vec2  = vec<2, fpn::fixed24_8>;
-}
-namespace glm
-{
-    using f8_8vec3  = vec<3, fpn::fixed8_8>;
-    using f8_16vec3 = vec<3, fpn::fixed8_16>;
-    using f8_24vec3 = vec<3, fpn::fixed8_24>;
-
-    using f16_8vec3  = vec<3, fpn::fixed16_8>;
-    using f16_16vec3 = vec<3, fpn::fixed16_16>;
-
-    using f24_8vec3  = vec<3, fpn::fixed24_8>;
-}
-namespace glm
-{
-    using f8_8vec4  = vec<4, fpn::fixed8_8>;
-    using f8_16vec4 = vec<4, fpn::fixed8_16>;
-    using f8_24vec4 = vec<4, fpn::fixed8_24>;
-
-    using f16_8vec4  = vec<4, fpn::fixed16_8>;
-    using f16_16vec4 = vec<4, fpn::fixed16_16>;
-
-    using f24_8vec4  = vec<4, fpn::fixed24_8>;
-}
-namespace glm
-{
-    using f8_8mat2  = mat<2, 2, fpn::fixed8_8>;
-    using f8_16mat2 = mat<2, 2, fpn::fixed8_16>;
-    using f8_24mat2 = mat<2, 2, fpn::fixed8_24>;
-
-    using f16_8mat2  = mat<2, 2, fpn::fixed16_8>;
-    using f16_16mat2 = mat<2, 2, fpn::fixed16_16>;
-
-    using f24_8mat2  = mat<2, 2, fpn::fixed24_8>;
-}
-namespace glm
-{
-    using f8_8mat3  = mat<3, 3, fpn::fixed8_8>;
-    using f8_16mat3 = mat<3, 3, fpn::fixed8_16>;
-    using f8_24mat3 = mat<3, 3, fpn::fixed8_24>;
-
-    using f16_8mat3  = mat<3, 3, fpn::fixed16_8>;
-    using f16_16mat3 = mat<3, 3, fpn::fixed16_16>;
-
-    using f24_8mat3  = mat<3, 3, fpn::fixed24_8>;
-}
-namespace glm
-{
-    using f8_8mat4  = mat<4, 4, fpn::fixed8_8>;
-    using f8_16mat4 = mat<4, 4, fpn::fixed8_16>;
-    using f8_24mat4 = mat<4, 4, fpn::fixed8_24>;
-
-    using f16_8mat4  = mat<4, 4, fpn::fixed16_8>;
-    using f16_16mat4 = mat<4, 4, fpn::fixed16_16>;
-
-    using f24_8mat4  = mat<4, 4, fpn::fixed24_8>;
-}
-#endif

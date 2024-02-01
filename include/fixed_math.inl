@@ -4,7 +4,7 @@
 // Basic operations
 namespace fpn
 {
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr fixed<IB, FB> abs(const fixed<IB, FB> value) noexcept
     {
         if(value > 0)
@@ -13,17 +13,17 @@ namespace fpn
             return -value;
         //THINK Is this faster than worying about 2's complement (like in https://stackoverflow.com/a/6114214 ) ? Check compiler output first!
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr fixed<IB, FB> min(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
     {
         return left <= right ? left : right;
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr fixed<IB, FB> max(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
     {
         return left >= right ? left : right;
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr fixed<IB, FB> dim(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
     {
         if(left >= right)
@@ -31,7 +31,7 @@ namespace fpn
         else // left < right
             return right - left;
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr int8_t sign(const fixed<IB, FB> value) noexcept
     {
         if(value.Value.Value == 0)
@@ -45,43 +45,43 @@ namespace fpn
 // Exponential functions
 namespace fpn
 {
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> exp(const fixed<IB, FB> value) noexcept
     {
         return std::exp(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> exp2(const fixed<IB, FB> value) noexcept
     {
         return std::exp2(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> expm1(const fixed<IB, FB> value) noexcept
     {
         return std::expm1(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> log(const fixed<IB, FB> value) noexcept
     {
         return std::log(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> log10(const fixed<IB, FB> value) noexcept
     {
         return std::log10(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> log2(const fixed<IB, FB> value) noexcept
     {
         return std::log2(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> log1p(const fixed<IB, FB> value) noexcept
     {
         return std::log1p(static_cast<double>(value));
@@ -91,31 +91,31 @@ namespace fpn
 // Power functions
 namespace fpn
 {
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> pow(const fixed<IB, FB> x, const fixed<IB, FB> y) noexcept
     {
         return std::pow(static_cast<double>(x), static_cast<double>(y));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> sqrt(const fixed<IB, FB> value) noexcept
     {
         return std::sqrt(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> cbrt(const fixed<IB, FB> value) noexcept
     {
         return std::cbrt(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> hypot(const fixed<IB, FB> v0, const fixed<IB, FB> v1) noexcept
     {
         return std::hypot(static_cast<double>(v0), static_cast<double>(v1));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> hypot(const fixed<IB, FB> v0, const fixed<IB, FB> v1, const fixed<IB, FB> v2) noexcept
     {
         return std::hypot(static_cast<double>(v0), static_cast<double>(v1), static_cast<double>(v2));
@@ -125,43 +125,43 @@ namespace fpn
 // Trigonometric functions
 namespace fpn
 {
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> sin(const fixed<IB, FB> value) noexcept
     {
         return std::sin(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> cos(const fixed<IB, FB> value) noexcept
     {
         return std::cos(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> tan(const fixed<IB, FB> value) noexcept
     {
         return std::tan(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> asin(const fixed<IB, FB> value) noexcept
     {
         return std::asin(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> acos(const fixed<IB, FB> value) noexcept
     {
         return std::acos(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> atan(const fixed<IB, FB> value) noexcept
     {
         return std::atan(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> atan2(fixed<IB, FB> y, fixed<IB, FB> x) noexcept
     {
         return std::atan2(static_cast<double>(y), static_cast<double>(x));
@@ -171,37 +171,37 @@ namespace fpn
 // Hyperbolic functions
 namespace fpn
 {
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> sinh(const fixed<IB, FB> value) noexcept
     {
         return std::sinh(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> cosh(const fixed<IB, FB> value) noexcept
     {
         return std::cosh(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> tanh(const fixed<IB, FB> value) noexcept
     {
         return std::tanh(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> asinh(const fixed<IB, FB> value) noexcept
     {
         return std::asinh(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> acosh(const fixed<IB, FB> value) noexcept
     {
         return std::acosh(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> atanh(const fixed<IB, FB> value) noexcept
     {
         return std::atanh(static_cast<double>(value));
@@ -211,25 +211,25 @@ namespace fpn
 // Error and gamma functions
 namespace fpn
 {
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> erf(const fixed<IB, FB> value) noexcept
     {
         return std::erf(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> erfc(const fixed<IB, FB> value) noexcept
     {
         return std::erfc(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> tgamma(const fixed<IB, FB> value) noexcept
     {
         return std::tgamma(static_cast<double>(value));
         //TODO Fixed-point-number specific implementation
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> lgamma(const fixed<IB, FB> value) noexcept
     {
         return std::lgamma(static_cast<double>(value));
@@ -239,7 +239,7 @@ namespace fpn
 // Nearest integer operations
 namespace fpn
 {
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr fixed<IB, FB> floor(const fixed<IB, FB> value) noexcept
     {
         return fixed<IB, FB>(
@@ -250,7 +250,7 @@ namespace fpn
             }
         );
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr fixed<IB, FB> ceil(const fixed<IB, FB> value) noexcept
     {
         return fixed<IB, FB>(
@@ -262,7 +262,7 @@ namespace fpn
             }
         );
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr fixed<IB, FB> trunc(const fixed<IB, FB> value) noexcept
     {
         if(value > 0)
@@ -270,7 +270,7 @@ namespace fpn
         else
             return ceil(value);
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr fixed<IB, FB> round(const fixed<IB, FB> value) noexcept
     {
         const auto fractional = value.FractionalValue();
@@ -289,12 +289,12 @@ namespace fpn
 }
 namespace fpn
 {
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> degrees(const fixed<IB, FB> radians) noexcept
     {
         return radians * std::numbers::template pi_v<double> / 180;
     }
-    template<std::size_t IB, std::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline FPN_CONSTEXPR fixed<IB, FB> radians(const fixed<IB, FB> degrees) noexcept
     {
         return degrees / std::numbers::template pi_v<double> * 180;
