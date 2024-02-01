@@ -19,7 +19,10 @@ namespace fpn
 #   define FPN_CONSTEXPR
 #endif
     /**
-     * Fixed-point numbers.
+     * Signed fixed-point numbers.
+     * @note There is no unsigned variant
+     * Equivalent to integer of IntegralBits (8 -> int8_t, 16 -> int16_t) with additional FractionalBits for fractional part.
+     * @note FractionalBits are not decimal places it will print. Best way to imagine it is as 1 over number of values of FractionalBits unsigned integer for minimum step (1 -> 1/2 = 0.5, 2 -> 1/4 = 0.25, 3 -> 1/8 = 0.125)
      */
     template<fpn::size_t IntegralBits, fpn::size_t FractionalBits>
     struct fixed
@@ -49,6 +52,7 @@ namespace fpn
 
         ValueType Value{};
 
+        // Basic (technical) constructors
         inline constexpr fixed() noexcept : Value() {}
         inline explicit constexpr fixed(ValueType) noexcept;
         inline explicit constexpr fixed(
@@ -56,9 +60,11 @@ namespace fpn
             typename integer_bits<FractionalBits>::unsigned_type fractionalValue
         );
 
+        // Conversion from other fixed size
         template<fpn::size_t IB2, fpn::size_t FB2>
         inline explicit constexpr fixed(fixed<IB2, FB2>) noexcept;
 
+        // Conversion from string
         inline explicit constexpr fixed(const std::string&) noexcept; //TODO Use std::string_view as main implementation using std::from_chars
         inline explicit constexpr fixed(const std::string_view value) noexcept : fixed(std::string(value)) {}
         inline explicit constexpr fixed(const char* value) noexcept : fixed(std::string(value)) {}
