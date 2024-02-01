@@ -55,8 +55,13 @@ namespace fpn
             typename integer_bits<IntegralBits>::signed_type     integralValue,
             typename integer_bits<FractionalBits>::unsigned_type fractionalValue
         );
+
         template<fpn::size_t IB2, fpn::size_t FB2>
         inline explicit constexpr fixed(fixed<IB2, FB2>) noexcept;
+
+        inline explicit constexpr fixed(const std::string&) noexcept; //TODO Use std::string_view as main implementation using std::from_chars
+        inline explicit constexpr fixed(const std::string_view value) noexcept : fixed(std::string(value)) {}
+        inline explicit constexpr fixed(const char* value) noexcept : fixed(std::string(value)) {}
 
         // Copy
         inline constexpr fixed(const fixed& other) noexcept = default;
@@ -163,6 +168,9 @@ namespace fpn
     template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline std::string to_string(fixed<IB, FB>);
 
+    template <typename CharT, fpn::size_t IB, fpn::size_t FB>
+    inline std::basic_ostream<CharT>& operator<<(std::basic_ostream<CharT>&, fixed<IB, FB>) noexcept;
+
 #pragma region Other fixed-point numbers
     template<fpn::size_t IB1, fpn::size_t FB1, fpn::size_t IB2, fpn::size_t FB2>
     [[nodiscard]] inline constexpr auto operator+(fixed<IB1, FB1>, fixed<IB2, FB2>) noexcept;
@@ -239,11 +247,60 @@ namespace fpn
 
 #include "fixed.inl"
 
-template<fpn::size_t IB, fpn::size_t FB>
-struct std::hash<fpn::fixed<IB, FB>>
+namespace std
 {
-    [[nodiscard]] fpn::size_t constexpr operator()(const fpn::fixed<IB, FB>& value) const noexcept
+    template<fpn::size_t IB, fpn::size_t FB>
+    struct hash<fpn::fixed<IB, FB>>
     {
-        return value.Value.Value;
-    }
-};
+        [[nodiscard]] fpn::size_t constexpr operator()(const fpn::fixed<IB, FB>& value) const noexcept
+        {
+            return value.Value.Value;
+        }
+    };
+    template<fpn::size_t IB, fpn::size_t FB>
+    struct numeric_limits<fpn::fixed<IB, FB>>
+    {
+        numeric_limits() = delete;
+        using FIXED = fpn::fixed<IB, FB>;
+
+        static constexpr bool is_specialized = true;
+
+        static constexpr bool is_signed  = true;
+        static constexpr bool is_integer = true;
+        static constexpr bool is_exact   = true;
+
+        static constexpr bool               has_infinity      = false;
+        static constexpr bool               has_quiet_NaN     = false;
+        static constexpr bool               has_signaling_NaN = false;
+        static constexpr float_denorm_style has_denorm        = denorm_absent;
+        static constexpr bool               has_denorm_loss   = false;
+
+        static constexpr float_round_style round_style = round_toward_zero;
+        static constexpr bool              is_iec559   = false;
+        static constexpr bool              is_bounded  = true;
+        static constexpr bool              is_modulo   = false; //THINK Maybe?
+
+        static constexpr int digits       = IB + FB - 1;
+        static constexpr int digits10     = (IB - 1) * std::log10(2);
+        static constexpr int max_digits10 = 0;
+        static constexpr int radix        = 2;
+
+        static constexpr int min_exponent   = 0;
+        static constexpr int min_exponent10 = 0;
+        static constexpr int max_exponent   = 0;
+        static constexpr int max_exponent10 = 0;
+
+        static constexpr bool traps           = true;
+        static constexpr bool tinyness_before = false;
+
+        static constexpr FIXED min()           noexcept { return FIXED::MinValue(); }
+        static constexpr FIXED lowest()        noexcept { return min(); }
+        static constexpr FIXED max()           noexcept { return FIXED::MaxValue(); }
+        static constexpr FIXED epsilon()       noexcept { return {}; }
+        static constexpr FIXED round_error()   noexcept { return {}; }
+        static constexpr FIXED infinity()      noexcept { return {}; }
+        static constexpr FIXED quiet_NaN()     noexcept { return {}; }
+        static constexpr FIXED signaling_NaN() noexcept { return {}; }
+        static constexpr FIXED denorm_min()    noexcept { return {}; }
+    };
+}

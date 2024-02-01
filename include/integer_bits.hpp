@@ -1,8 +1,13 @@
 #pragma once
 
+#include <cstdint>
+#include <climits>
+#include <type_traits>
+
 namespace fpn
 {
     using size_t = uint64_t;
+    static_assert(CHAR_BIT == 8u);
     
     template<fpn::size_t T>
     struct integer_bits

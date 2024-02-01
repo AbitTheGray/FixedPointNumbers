@@ -129,6 +129,12 @@ namespace fpn
         // Limit total bits
         Value.Value = TruncateBits_Signed(Value.Value, IntegralBits + FractionalBits);
     }
+    template <fpn::size_t IntegralBits, fpn::size_t FractionalBits>
+    constexpr fixed<IntegralBits, FractionalBits>::fixed(const std::string& value) noexcept
+      : fixed(std::stod(value))
+    {
+        //TODO
+    }
 }
 // Integral + Fractional Values
 namespace fpn
@@ -441,6 +447,14 @@ namespace fpn
     template<fpn::size_t IB, fpn::size_t FB>
     inline std::string to_string(const fixed<IB, FB> value)
     {
-        return std::to_string(static_cast<double>(value));
+        return std::to_string(static_cast<double>(value)); //TODO
+    }
+    template<typename CharT, fpn::size_t IB, fpn::size_t FB>
+    std::basic_ostream<CharT>& operator<<(std::basic_ostream<CharT>& out, const fixed<IB, FB> value) noexcept
+    {
+        if constexpr(std::is_same_v<CharT, char>)
+            return out << std::to_string(static_cast<double>(value));
+        else
+            return out << static_cast<double>(value);
     }
 }
