@@ -221,15 +221,6 @@ namespace fpn
     template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr fixed<IB, FB> operator/(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
     {
-        /*
-        return fixed<IB, FB>(
-            typename fixed<IB, FB>::ValueType{
-                static_cast<typename fixed<IB, FB>::ValueType::T>(
-                    left.Value.Value / right.Value.Value
-                )
-            }
-        );
-        */
         if constexpr(IB + FB * 2 <= sizeof(fpn::size_t) * 8) // Can use higher integer
         {
             using HigherT = typename integer_bits<IB + FB * 2>::signed_type;
@@ -244,22 +235,9 @@ namespace fpn
                 }
             );
         }
-        else if constexpr(IB + FB * 2 <= sizeof(int64_t) * 8)
-        {
-            using HigherT = int64_t;
 
-            return fixed<IB, FB>(
-                typename fixed<IB, FB>::ValueType{
-                    static_cast<typename fixed<IB, FB>::ValueType::T>(
-                        (
-                            static_cast<HigherT>(left.Value.Value) << FB
-                        ) / right.Value.Value
-                    )
-                }
-            );
-        }
 #ifdef __SIZEOF_INT128__
-        else if constexpr(IB + FB * 2 <= sizeof(__int128) * 8)
+        if constexpr(IB + FB * 2 <= sizeof(__int128) * 8)
         {
             using HigherT = __int128;
 
@@ -274,33 +252,11 @@ namespace fpn
             );
         }
 #endif
-        else
-        {
-            using T = typename fixed<IB, FB>::ValueType::T;
-            T absLeft = abs(left).Value.Value;
-            T absRight = abs(right).Value.Value;
-            T value = 0;
 
-            // This is not an optimal way but it is working without support for 128-bit integer (on 64-bit systems).
-            // If you are using a type afected by this, it is recommended to use a library for 128-bit integer and define both `__int128` (typedef?) and `__SIZEOF_INT128__`=16
-            for(fpn::size_t bit = 0; bit < IB + FB; bit++)
-            {
-                if(absRight & BIT(bit))
-                {
-                    if(bit >= FB)
-                        value += absLeft >> (bit - FB);
-                    else
-                        value += absLeft << (FB - bit);
-                }
-            }
-
-            fixed<IB, FB> outValue = fixed<IB, FB>( typename fixed<IB, FB>::ValueType{ value } );
-
-            return (left >= 0) == (right >= 0) ? outValue : -outValue;
-        }
+        return left * inverse(right);
     }
     template<fpn::size_t IB, fpn::size_t FB> requires (FB * 2 < sizeof(typename fixed<IB, FB>::ValueType::T) * 8)
-    inline constexpr fixed<IB, FB> Inverse(const fixed<IB, FB> value) noexcept
+    inline constexpr fixed<IB, FB> inverse(const fixed<IB, FB> value) noexcept
     {
         using T = typename fixed<IB, FB>::ValueType::T;
         using UT = std::make_unsigned_t<T>;
@@ -311,9 +267,24 @@ namespace fpn
         );
     }
     template<fpn::size_t IB, fpn::size_t FB>
-    inline constexpr fixed<IB, FB> Inverse(const fixed<IB, FB> value) noexcept
+    inline constexpr fixed<IB, FB> inverse(const fixed<IB, FB> input) noexcept
     {
-        return 1 / value;
+        using T = typename fixed<IB, FB>::ValueType::T;
+        using UT = std::make_unsigned_t<T>;
+        UT absInput = static_cast<UT>(abs(input).Value.Value);
+        T value = 0;
+
+        // This is not an optimal way but it is working without support for 128-bit integer (on 64-bit systems).
+        // If you are using a type afected by this, it is recommended to use a library for 128-bit integer and define both `__int128` (typedef?) and `__SIZEOF_INT128__`=16
+        for(fpn::size_t bit = 0; bit < IB + FB; bit++)
+        {
+            if(absInput & BIT(bit))
+                value += BIT<UT>(2 * FB  - bit);
+        }
+
+        fixed<IB, FB> outValue = fixed<IB, FB>( typename fixed<IB, FB>::ValueType{ value } );
+
+        return (input >= 0) ? outValue : -outValue;
     }
 }
 // Different fixed-point mathematical operators

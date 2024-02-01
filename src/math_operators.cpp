@@ -389,76 +389,76 @@ namespace fpn
 namespace fpn
 {
 #pragma region fixed8_8
-    static_assert(Inverse(fixed8_8( 1)) == 1     );
-    static_assert(Inverse(fixed8_8( 2)) == 0.5   );
-    static_assert(Inverse(fixed8_8( 4)) == 0.25  );
-    static_assert(Inverse(fixed8_8( 8)) == 0.125 );
-    static_assert(Inverse(fixed8_8(16)) == 0.0625);
+    static_assert(inverse(fixed8_8( 1)) == 1     );
+    static_assert(inverse(fixed8_8( 2)) == 0.5   );
+    static_assert(inverse(fixed8_8( 4)) == 0.25  );
+    static_assert(inverse(fixed8_8( 8)) == 0.125 );
+    static_assert(inverse(fixed8_8(16)) == 0.0625);
 
-    static_assert(Inverse(fixed8_8(0.5   )) ==  2);
-    static_assert(Inverse(fixed8_8(0.25  )) ==  4);
-    static_assert(Inverse(fixed8_8(0.125 )) ==  8);
-    static_assert(Inverse(fixed8_8(0.0625)) == 16);
+    static_assert(inverse(fixed8_8(0.5   )) ==  2);
+    static_assert(inverse(fixed8_8(0.25  )) ==  4);
+    static_assert(inverse(fixed8_8(0.125 )) ==  8);
+    static_assert(inverse(fixed8_8(0.0625)) == 16);
 #pragma endregion
 #pragma region fixed8_16
-    static_assert(Inverse(fixed8_16( 1)) == 1     );
-    static_assert(Inverse(fixed8_16( 2)) == 0.5   );
-    static_assert(Inverse(fixed8_16( 4)) == 0.25  );
-    static_assert(Inverse(fixed8_16( 8)) == 0.125 );
-    static_assert(Inverse(fixed8_16(16)) == 0.0625);
+    static_assert(inverse(fixed8_16( 1)) == 1     );
+    static_assert(inverse(fixed8_16( 2)) == 0.5   );
+    static_assert(inverse(fixed8_16( 4)) == 0.25  );
+    static_assert(inverse(fixed8_16( 8)) == 0.125 );
+    static_assert(inverse(fixed8_16(16)) == 0.0625);
 
-    static_assert(Inverse(fixed8_16(0.5   )) ==  2);
-    static_assert(Inverse(fixed8_16(0.25  )) ==  4);
-    static_assert(Inverse(fixed8_16(0.125 )) ==  8);
-    static_assert(Inverse(fixed8_16(0.0625)) == 16);
+    static_assert(inverse(fixed8_16(0.5   )) ==  2);
+    static_assert(inverse(fixed8_16(0.25  )) ==  4);
+    static_assert(inverse(fixed8_16(0.125 )) ==  8);
+    static_assert(inverse(fixed8_16(0.0625)) == 16);
 #pragma endregion
 #pragma region fixed16_8
-    static_assert(Inverse(fixed16_8( 1)) == 1     );
-    static_assert(Inverse(fixed16_8( 2)) == 0.5   );
-    static_assert(Inverse(fixed16_8( 4)) == 0.25  );
-    static_assert(Inverse(fixed16_8( 8)) == 0.125 );
-    static_assert(Inverse(fixed16_8(16)) == 0.0625);
+    static_assert(inverse(fixed16_8( 1)) == 1     );
+    static_assert(inverse(fixed16_8( 2)) == 0.5   );
+    static_assert(inverse(fixed16_8( 4)) == 0.25  );
+    static_assert(inverse(fixed16_8( 8)) == 0.125 );
+    static_assert(inverse(fixed16_8(16)) == 0.0625);
 
-    static_assert(Inverse(fixed16_8(0.5   )) ==  2);
-    static_assert(Inverse(fixed16_8(0.25  )) ==  4);
-    static_assert(Inverse(fixed16_8(0.125 )) ==  8);
-    static_assert(Inverse(fixed16_8(0.0625)) == 16);
+    static_assert(inverse(fixed16_8(0.5   )) ==  2);
+    static_assert(inverse(fixed16_8(0.25  )) ==  4);
+    static_assert(inverse(fixed16_8(0.125 )) ==  8);
+    static_assert(inverse(fixed16_8(0.0625)) == 16);
 #pragma endregion
 #pragma region fixed16_16
-    static_assert(Inverse(fixed16_16( 1)) == 1     );
-    static_assert(Inverse(fixed16_16( 2)) == 0.5   );
-    static_assert(Inverse(fixed16_16( 4)) == 0.25  );
-    static_assert(Inverse(fixed16_16( 8)) == 0.125 );
-    static_assert(Inverse(fixed16_16(16)) == 0.0625);
+    static_assert(inverse(fixed16_16( 1)) == 1     );
+    static_assert(inverse(fixed16_16( 2)) == 0.5   );
+    static_assert(inverse(fixed16_16( 4)) == 0.25  );
+    static_assert(inverse(fixed16_16( 8)) == 0.125 );
+    static_assert(inverse(fixed16_16(16)) == 0.0625);
 
-    static_assert(Inverse(fixed16_16(0.5   )) ==  2);
-    static_assert(Inverse(fixed16_16(0.25  )) ==  4);
-    static_assert(Inverse(fixed16_16(0.125 )) ==  8);
-    static_assert(Inverse(fixed16_16(0.0625)) == 16);
+    static_assert(inverse(fixed16_16(0.5   )) ==  2);
+    static_assert(inverse(fixed16_16(0.25  )) ==  4);
+    static_assert(inverse(fixed16_16(0.125 )) ==  8);
+    static_assert(inverse(fixed16_16(0.0625)) == 16);
 #pragma endregion
 #pragma region fixed32_16
-    static_assert(Inverse(fixed32_16( 1)) == 1     );
-    static_assert(Inverse(fixed32_16( 2)) == 0.5   );
-    static_assert(Inverse(fixed32_16( 4)) == 0.25  );
-    static_assert(Inverse(fixed32_16( 8)) == 0.125 );
-    static_assert(Inverse(fixed32_16(16)) == 0.0625);
+    static_assert(inverse(fixed32_16( 1)) == 1     );
+    static_assert(inverse(fixed32_16( 2)) == 0.5   );
+    static_assert(inverse(fixed32_16( 4)) == 0.25  );
+    static_assert(inverse(fixed32_16( 8)) == 0.125 );
+    static_assert(inverse(fixed32_16(16)) == 0.0625);
 
-    static_assert(Inverse(fixed32_16(0.5   )) ==  2);
-    static_assert(Inverse(fixed32_16(0.25  )) ==  4);
-    static_assert(Inverse(fixed32_16(0.125 )) ==  8);
-    static_assert(Inverse(fixed32_16(0.0625)) == 16);
+    static_assert(inverse(fixed32_16(0.5   )) ==  2);
+    static_assert(inverse(fixed32_16(0.25  )) ==  4);
+    static_assert(inverse(fixed32_16(0.125 )) ==  8);
+    static_assert(inverse(fixed32_16(0.0625)) == 16);
 #pragma endregion
 #pragma region fixed32_32
-    static_assert(Inverse(fixed32_32( 1)) == 1     );
-    static_assert(Inverse(fixed32_32( 2)) == 0.5   );
-    static_assert(Inverse(fixed32_32( 4)) == 0.25  );
-    static_assert(Inverse(fixed32_32( 8)) == 0.125 );
-    static_assert(Inverse(fixed32_32(16)) == 0.0625);
+    static_assert(inverse(fixed32_32( 1)) == 1     );
+    static_assert(inverse(fixed32_32( 2)) == 0.5   );
+    static_assert(inverse(fixed32_32( 4)) == 0.25  );
+    static_assert(inverse(fixed32_32( 8)) == 0.125 );
+    static_assert(inverse(fixed32_32(16)) == 0.0625);
 
-    static_assert(Inverse(fixed32_32(0.5   )) ==  2);
-    static_assert(Inverse(fixed32_32(0.25  )) ==  4);
-    static_assert(Inverse(fixed32_32(0.125 )) ==  8);
-    static_assert(Inverse(fixed32_32(0.0625)) == 16);
+    static_assert(inverse(fixed32_32(0.5   )) ==  2);
+    static_assert(inverse(fixed32_32(0.25  )) ==  4);
+    static_assert(inverse(fixed32_32(0.125 )) ==  8);
+    static_assert(inverse(fixed32_32(0.0625)) == 16);
 #pragma endregion
 }
 #endif

@@ -156,9 +156,9 @@ namespace fpn
 
     /**
      * Calculate 1/x
-     */
+    */
     template<fpn::size_t IB, fpn::size_t FB>
-    [[nodiscard]] inline constexpr fixed<IB, FB> Inverse(fixed<IB, FB>) noexcept;
+    [[nodiscard]] inline constexpr fixed<IB, FB> inverse(fixed<IB, FB>) noexcept;
 
     template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline std::string to_string(fixed<IB, FB>);
@@ -197,6 +197,9 @@ namespace fpn
     [[nodiscard]] inline constexpr fixed<IB, FB> operator%(fixed<IB, FB>, std::integral auto) noexcept;
 #pragma endregion
 
+#pragma region Predefined types
+    // "Slow division" below means division operation uses 128-bit number or far slower algorithm for platforms without 128-bit numbers (=Windows)
+
     using fixed8_8  = fixed<8,  8>;
     using fixed8_16 = fixed<8, 16>;
     using fixed8_24 = fixed<8, 24>;
@@ -214,23 +217,24 @@ namespace fpn
 
     using fixed24_8  = fixed<24,  8>;
     using fixed24_16 = fixed<24, 16>;
-    using fixed24_24 = fixed<24, 24>; // Slow division
+    using fixed24_24 = fixed<24, 24>;
     using fixed24_32 = fixed<24, 32>; // Slow division
     using fixed24_40 = fixed<24, 40>; // Slow division
 
     using fixed32_8  = fixed<32,  8>;
     using fixed32_16 = fixed<32, 16>;
-    using fixed32_24 = fixed<32, 24>; // Slow division
+    using fixed32_24 = fixed<32, 24>;
     using fixed32_32 = fixed<32, 32>; // Slow division
 
     using fixed40_8  = fixed<40,  8>;
     using fixed40_16 = fixed<40, 16>;
-    using fixed40_24 = fixed<40, 24>; // Slow division
+    using fixed40_24 = fixed<40, 24>;
 
     using fixed48_8  = fixed<48,  8>;
-    using fixed48_16 = fixed<48, 16>; // Slow division
+    using fixed48_16 = fixed<48, 16>;
 
-    using fixed56_8  = fixed<56,  8>; // Slow division
+    using fixed56_8  = fixed<56,  8>;
+#pragma endregion
 }
 
 #include "fixed.inl"
