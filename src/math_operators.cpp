@@ -462,3 +462,65 @@ namespace fpn
 #pragma endregion
 }
 #endif
+
+// Increment/Decrement operators (integers)
+namespace fpn
+{
+#pragma region fixed8_8
+    static_assert(++fixed8_8(0) == 1);
+    static_assert(fixed8_8(0)++ == 0);
+
+    static_assert(++fixed8_8(1) == 2);
+    static_assert(fixed8_8(1)++ == 1);
+
+    static_assert(++fixed8_8(-1) ==  0);
+    static_assert(fixed8_8(-1)++ == -1);
+
+    static_assert(--fixed8_8(0) == -1);
+    static_assert(fixed8_8(0)-- ==  0);
+
+    static_assert(--fixed8_8(1) == 0);
+    static_assert(fixed8_8(1)-- == 1);
+
+    static_assert(--fixed8_8(-1) == -2);
+    static_assert(fixed8_8(-1)-- == -1);
+#pragma endregion
+#pragma region fixed8_16
+    static_assert(++fixed8_16(0) == 1);
+    static_assert(fixed8_16(0)++ == 0);
+
+    static_assert(++fixed8_16(1) == 2);
+    static_assert(fixed8_16(1)++ == 1);
+
+    static_assert(++fixed8_16(-1) ==  0);
+    static_assert(fixed8_16(-1)++ == -1);
+
+    static_assert(--fixed8_16(0) == -1);
+    static_assert(fixed8_16(0)-- ==  0);
+
+    static_assert(--fixed8_16(1) == 0);
+    static_assert(fixed8_16(1)-- == 1);
+
+    static_assert(--fixed8_16(-1) == -2);
+    static_assert(fixed8_16(-1)-- == -1);
+#pragma endregion
+#pragma region fixed16_8
+    static_assert(++fixed16_8(0) == 1);
+    static_assert(fixed16_8(0)++ == 0);
+
+    static_assert(++fixed16_8(1) == 2);
+    static_assert(fixed16_8(1)++ == 1);
+
+    static_assert(++fixed16_8(-1) ==  0);
+    static_assert(fixed16_8(-1)++ == -1);
+
+    static_assert(--fixed16_8(0) == -1);
+    static_assert(fixed16_8(0)-- ==  0);
+
+    static_assert(--fixed16_8(1) == 0);
+    static_assert(fixed16_8(1)-- == 1);
+
+    static_assert(--fixed16_8(-1) == -2);
+    static_assert(fixed16_8(-1)-- == -1);
+#pragma endregion
+}

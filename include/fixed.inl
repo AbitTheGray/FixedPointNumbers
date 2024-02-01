@@ -458,3 +458,33 @@ namespace fpn
             return out << static_cast<double>(value);
     }
 }
+// Increment/Decrement operators
+namespace fpn
+{
+    template <fpn::size_t IntegralBits, fpn::size_t FractionalBits>
+    inline constexpr fixed<IntegralBits, FractionalBits>& fixed<IntegralBits, FractionalBits>::operator++() noexcept
+    {
+        Value = (*this + 1).Value;
+        return *this;
+    }
+    template <fpn::size_t IntegralBits, fpn::size_t FractionalBits>
+    inline constexpr fixed<IntegralBits, FractionalBits>& fixed<IntegralBits, FractionalBits>::operator--() noexcept
+    {
+        Value = (*this - 1).Value;
+        return *this;
+    }
+    template <fpn::size_t IntegralBits, fpn::size_t FractionalBits>
+    inline constexpr const fixed<IntegralBits, FractionalBits> fixed<IntegralBits, FractionalBits>::operator++(int) noexcept
+    {
+        auto temp = *this;
+        Value = (*this + 1).Value;
+        return temp;
+    }
+    template <fpn::size_t IntegralBits, fpn::size_t FractionalBits>
+    inline constexpr const fixed<IntegralBits, FractionalBits> fixed<IntegralBits, FractionalBits>::operator--(int) noexcept
+    {
+        auto temp = *this;
+        Value = (*this - 1).Value;
+        return temp;
+    }
+}

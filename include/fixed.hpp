@@ -120,12 +120,14 @@ namespace fpn
 #endif
 #pragma endregion
 
-        /*
-        [[nodiscard]] inline constexpr fixed operator++() noexcept;
-        [[nodiscard]] inline constexpr fixed operator--() noexcept;
-        [[nodiscard]] inline constexpr fixed operator++(int) noexcept;
-        [[nodiscard]] inline constexpr fixed operator--(int) noexcept;
-        */
+#pragma region Increment/Decrement operators
+        // Prefix
+        [[nodiscard]] inline constexpr fixed& operator++() noexcept;
+        [[nodiscard]] inline constexpr fixed& operator--() noexcept;
+        // Postfix
+        [[nodiscard]] inline constexpr const fixed operator++(int) noexcept;
+        [[nodiscard]] inline constexpr const fixed operator--(int) noexcept;
+#pragma endregion
 
 #pragma region Integers
         inline constexpr fixed(std::integral auto) noexcept;
