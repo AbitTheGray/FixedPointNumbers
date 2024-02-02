@@ -244,7 +244,7 @@ namespace fpn
     {
         return fixed<IB, FB>(
             typename fixed<IB, FB>::ValueType{
-                static_cast<typename fixed<IB, FB>::ValueType::T>(
+                static_cast<typename fixed<IB, FB>::T>(
                     value.Value.Value & (~BITS(FB))
                 )
             }
@@ -255,9 +255,9 @@ namespace fpn
     {
         return fixed<IB, FB>(
             typename fixed<IB, FB>::ValueType{
-                static_cast<typename fixed<IB, FB>::ValueType::T>(
+                static_cast<typename fixed<IB, FB>::T>(
                     floor(value).Value.Value
-                    + static_cast<typename fixed<IB, FB>::ValueType::T>((value.Value.Value & BITS(FB)) != 0 ? BIT(FB) : 0)
+                    + static_cast<typename fixed<IB, FB>::T>((value.Value.Value & BITS(FB)) != 0 ? BIT(FB) : 0)
                 )
             }
         );

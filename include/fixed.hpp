@@ -24,19 +24,23 @@ namespace fpn
      * Equivalent to integer of IntegralBits (8 -> int8_t, 16 -> int16_t) with additional FractionalBits for fractional part.
      * @note FractionalBits are not decimal places it will print. Best way to imagine it is as 1 over number of values of FractionalBits unsigned integer for minimum step (1 -> 1/2 = 0.5, 2 -> 1/4 = 0.25, 3 -> 1/8 = 0.125)
      */
-    template<fpn::size_t IntegralBits, fpn::size_t FractionalBits>
+    template<fpn::size_t IB, fpn::size_t FB>
     struct fixed
     {
+        static constexpr fpn::size_t IntegralBits = IB;
+        static constexpr fpn::size_t FractionalBits = FB;
+        static constexpr fpn::size_t TotalBits = IntegralBits + FractionalBits;
         static_assert(IntegralBits > 1);
         static_assert(FractionalBits > 0);
         static_assert(IntegralBits + FractionalBits <= 64);
 
+        using T = typename integer_bits<TotalBits>::signed_type;
+        
         /**
          * Structure to hold the value and not collide with other types.
          */
         struct ValueType
         {
-            using T = typename integer_bits<IntegralBits + FractionalBits>::signed_type;
             T Value{};
 
             inline constexpr ValueType() noexcept : Value() {}
@@ -56,8 +60,8 @@ namespace fpn
         inline constexpr fixed() noexcept : Value() {}
         inline explicit constexpr fixed(ValueType) noexcept;
         inline explicit constexpr fixed(
-            typename integer_bits<IntegralBits>::signed_type     integralValue,
-            typename integer_bits<FractionalBits>::unsigned_type fractionalValue
+            typename integer_bits<IB>::signed_type     integralValue,
+            typename integer_bits<FB>::unsigned_type fractionalValue
         );
 
         // Conversion from other fixed size
@@ -81,17 +85,17 @@ namespace fpn
         [[nodiscard]] inline constexpr bool operator==(const fixed other) const noexcept { return Value.Value == other.Value.Value; }
         [[nodiscard]] inline constexpr auto operator<=>(const fixed other) const noexcept { return Value.Value <=> other.Value.Value; }
 
-        [[nodiscard]] inline constexpr fixed operator-() const noexcept { return fixed{ ValueType{ static_cast<typename ValueType::T>(-Value.Value) } }; }
+        [[nodiscard]] inline constexpr fixed operator-() const noexcept { return fixed{ ValueType{ static_cast<T>(-Value.Value) } }; }
 
 #pragma region Integral + Fractional Values
         /**
          * Raw representation of the integral part of this number.
          */
-        [[nodiscard]] inline constexpr typename integer_bits<IntegralBits>::signed_type IntegralPart() const noexcept;
+        [[nodiscard]] inline constexpr typename integer_bits<IB>::signed_type IntegralPart() const noexcept;
         /**
          * Raw representation of the fractional part of this number.
          */
-        [[nodiscard]] inline constexpr typename integer_bits<FractionalBits>::unsigned_type FractionalPart() const noexcept;
+        [[nodiscard]] inline constexpr typename integer_bits<FB>::unsigned_type FractionalPart() const noexcept;
         /**
          * Integral part only.
          * @warning For negative values with fractional part, the value is as if rounded away from zero ( -1.5 becomes -2 )
