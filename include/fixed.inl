@@ -173,7 +173,7 @@ namespace fpn
     {
         return fixed( ValueType( ~static_cast<T>(BIT(IB + FB - 1u)) ) );
     }
-    template <fpn::size_t IB, fpn::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     constexpr fixed<IB, FB> fixed<IB, FB>::MinIncrement() noexcept
     {
         return fixed( ValueType( static_cast<T>(BIT(0u)) ) );
@@ -296,6 +296,30 @@ namespace fpn
         fixed<IB, FB> outValue = fixed<IB, FB>( typename fixed<IB, FB>::ValueType{ value } );
 
         return (input >= 0) ? outValue : -outValue;
+    }
+    template<fpn::size_t IB, fpn::size_t FB>
+    inline constexpr fixed<IB, FB>& operator+=(fixed<IB, FB>& left, const auto right) noexcept
+    {
+        left.Value = (left + fixed<IB, FB>(right)).Value;
+        return left;
+    }
+    template<fpn::size_t IB, fpn::size_t FB>
+    inline constexpr fixed<IB, FB>& operator-=(fixed<IB, FB>& left, const auto right) noexcept
+    {
+        left.Value = (left - fixed<IB, FB>(right)).Value;
+        return left;
+    }
+    template<fpn::size_t IB, fpn::size_t FB>
+    inline constexpr fixed<IB, FB>& operator*=(fixed<IB, FB>& left, const auto right) noexcept
+    {
+        left.Value = (left * fixed<IB, FB>(right)).Value;
+        return left;
+    }
+    template<fpn::size_t IB, fpn::size_t FB>
+    inline constexpr fixed<IB, FB>& operator/=(fixed<IB, FB>& left, const auto right) noexcept
+    {
+        left.Value = (left / fixed<IB, FB>(right)).Value;
+        return left;
     }
 }
 // Different fixed-point mathematical operators
@@ -466,26 +490,26 @@ namespace fpn
 // Increment/Decrement operators
 namespace fpn
 {
-    template <fpn::size_t IB, fpn::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr fixed<IB, FB>& fixed<IB, FB>::operator++() noexcept
     {
         Value = (*this + 1).Value;
         return *this;
     }
-    template <fpn::size_t IB, fpn::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr fixed<IB, FB>& fixed<IB, FB>::operator--() noexcept
     {
         Value = (*this - 1).Value;
         return *this;
     }
-    template <fpn::size_t IB, fpn::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr const fixed<IB, FB> fixed<IB, FB>::operator++(int) noexcept
     {
         auto temp = *this;
         Value = (*this + 1).Value;
         return temp;
     }
-    template <fpn::size_t IB, fpn::size_t FB>
+    template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr const fixed<IB, FB> fixed<IB, FB>::operator--(int) noexcept
     {
         auto temp = *this;

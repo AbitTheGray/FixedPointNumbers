@@ -146,7 +146,7 @@ namespace fpn
 
         template<typename TI>
             requires std::integral<TI>
-        [[nodiscard]] inline constexpr operator TI() const noexcept;
+        [[nodiscard]] inline constexpr explicit operator TI() const noexcept;
 
         [[nodiscard]] inline constexpr bool operator==(const std::integral auto other) const noexcept { return *this == fixed(other); }
         [[nodiscard]] inline constexpr auto operator<=>(const std::integral auto other) const noexcept { return *this <=> fixed(other); }
@@ -180,9 +180,18 @@ namespace fpn
     [[nodiscard]] inline constexpr fixed<IB, FB> inverse(fixed<IB, FB>) noexcept;
 
     template<fpn::size_t IB, fpn::size_t FB>
+    inline constexpr fixed<IB, FB>& operator+=(fixed<IB, FB>&, auto) noexcept;
+    template<fpn::size_t IB, fpn::size_t FB>
+    inline constexpr fixed<IB, FB>& operator-=(fixed<IB, FB>&, auto) noexcept;
+    template<fpn::size_t IB, fpn::size_t FB>
+    inline constexpr fixed<IB, FB>& operator*=(fixed<IB, FB>&, auto) noexcept;
+    template<fpn::size_t IB, fpn::size_t FB>
+    inline constexpr fixed<IB, FB>& operator/=(fixed<IB, FB>&, auto) noexcept;
+
+    template<fpn::size_t IB, fpn::size_t FB>
     [[nodiscard]] inline std::string to_string(fixed<IB, FB>);
 
-    template <typename CharT, fpn::size_t IB, fpn::size_t FB>
+    template<typename CharT, fpn::size_t IB, fpn::size_t FB>
     inline std::basic_ostream<CharT>& operator<<(std::basic_ostream<CharT>&, fixed<IB, FB>) noexcept;
 
 #pragma region Other fixed-point numbers

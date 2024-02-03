@@ -14,6 +14,10 @@ set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) # set() overrides option()
 
 add_compile_options("$<$<CONFIG:DEBUG>:-DDEBUG>") # Define DEBUG in Debug builds
 
+if(GCC)
+    add_compile_options("-Wno-psabi")
+endif()
+
 
 
 #--------------------------------
