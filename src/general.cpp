@@ -99,6 +99,15 @@ namespace fpn
 
     static_assert(fixed8_8::MaxValue().operator double() > 127.9);
     static_assert(fixed8_8::MaxValue().operator double() < 128);
+
+    static_assert(fixed<8, 1>::MinIncrement().operator double() == 0.5);
+    static_assert(fixed<8, 2>::MinIncrement().operator double() == 0.25);
+    static_assert(fixed<8, 3>::MinIncrement().operator double() == 0.125);
+    static_assert(fixed<8, 4>::MinIncrement().operator double() == 0.0625);
+    static_assert(fixed<8, 5>::MinIncrement().operator double() == 0.03125);
+    static_assert(fixed<8, 6>::MinIncrement().operator double() == 0.015625);
+    static_assert(fixed<8, 7>::MinIncrement().operator double() == 0.0078125);
+    static_assert(fixed<8, 8>::MinIncrement().operator double() == 0.00390625);
 #pragma endregion
 
 #pragma region Hashes

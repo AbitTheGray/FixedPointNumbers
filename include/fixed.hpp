@@ -111,6 +111,8 @@ namespace fpn
 #pragma region Min + Max values
         [[nodiscard]] inline static constexpr fixed MinValue() noexcept;
         [[nodiscard]] inline static constexpr fixed MaxValue() noexcept;
+
+        [[nodiscard]] inline static constexpr fixed MinIncrement() noexcept;
 #pragma endregion
 
 #pragma region Mathematical constants

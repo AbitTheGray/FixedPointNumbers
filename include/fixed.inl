@@ -173,6 +173,11 @@ namespace fpn
     {
         return fixed( ValueType( ~static_cast<T>(BIT(IB + FB - 1u)) ) );
     }
+    template <fpn::size_t IB, fpn::size_t FB>
+    constexpr fixed<IB, FB> fixed<IB, FB>::MinIncrement() noexcept
+    {
+        return fixed( ValueType( static_cast<T>(BIT(0u)) ) );
+    }
 }
 // Fixed-point mathematical operators
 namespace fpn
