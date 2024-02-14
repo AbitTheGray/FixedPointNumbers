@@ -69,9 +69,9 @@ namespace fpn
         inline explicit constexpr fixed(fixed<IB2, FB2>) noexcept;
 
         // Conversion from string
-        inline explicit constexpr fixed(const std::string&) noexcept; //TODO Use std::string_view as main implementation using std::from_chars
-        inline explicit constexpr fixed(const std::string_view value) noexcept : fixed(std::string(value)) {}
-        inline explicit constexpr fixed(const char* value) noexcept : fixed(std::string(value)) {}
+        inline explicit constexpr fixed(const std::string& value) : fixed(std::string_view(value)) {}
+        inline explicit constexpr fixed(std::string_view);
+        inline explicit constexpr fixed(const char* value) : fixed(std::string_view(value)) {}
 
         // Copy
         inline constexpr fixed(const fixed& other) noexcept = default;
@@ -116,20 +116,30 @@ namespace fpn
 #pragma endregion
 
 #pragma region Mathematical constants
-#ifndef _WIN32 // Disabled as MSVC has several problems with this
-        inline static const fixed e          = std::numbers::template e_v<double>;
-        inline static const fixed log2e      = std::numbers::template log2e_v<double>;
-        inline static const fixed log10e     = std::numbers::template log10e_v<double>;
-        inline static const fixed pi         = std::numbers::template pi_v<double>;
-        inline static const fixed inv_pi     = std::numbers::template inv_pi_v<double>;
-        inline static const fixed inv_sqrtpi = std::numbers::template inv_sqrtpi_v<double>;
-        inline static const fixed ln2        = std::numbers::template ln2_v<double>;
-        inline static const fixed ln10       = std::numbers::template ln10_v<double>;
-        inline static const fixed sqrt2      = std::numbers::template sqrt2_v<double>;
-        inline static const fixed sqrt3      = std::numbers::template sqrt3_v<double>;
-        inline static const fixed egamma     = std::numbers::template egamma_v<double>;
-        inline static const fixed phi        = std::numbers::template phi_v<double>;
-#endif
+        inline static constexpr fixed e           = "2.718'281'828'459'045'235'360'287'471'352'662'497'757'247'093'699'959'574'966'967'627'7"; ///< e
+        inline static constexpr fixed log2e       = "1.442'695'040'888'963'407'359'924'681'001'892'137'426'645'954'152'985'934'135'449'406'9"; ///< log(2, e)
+        inline static constexpr fixed log10e      = "0.434'294'481'903'251'827'651'128'918'916'605'082'294'397'005'803'666'566'114'453'783'1"; ///< log(10, e)
+
+        inline static constexpr fixed pi          = "3.141'592'653'589'793'238'462'643'383'279'502'884'197'169'399'375'105'820'974'944'592'3"; ///< π
+        inline static constexpr fixed inv_pi      = "0.318'309'886'183'790'671'537'767'526'745'028'724'068'919'291'480'912'897'495'334'688'1"; ///< 1 / π
+        inline static constexpr fixed sqrtpi      = "1.772'453'850'905'516'027'298'167'483'341'145'182'797'549'456'122'387'128'213'807'789'8"; ///< sqrt(π)
+        inline static constexpr fixed inv_sqrtpi  = "0.564'189'583'547'756'286'948'079'451'560'772'585'844'050'629'328'998'856'844'085'721'7"; ///< 1 / sqrt(π)
+        inline static constexpr fixed tau         = "6.283'185'307'179'586'476'925'286'766'559'005'768'394'338'798'750'211'641'949'889'184'6"; ///< τ = 2 * π
+        inline static constexpr fixed inv_tau     = "0.159'154'943'091'895'335'768'883'763'372'514'362'034'459'645'740'456'448'747'667'344'0"; ///< 1 / τ
+        inline static constexpr fixed sqrttau     = "2.506'628'274'631'000'502'415'765'284'811'045'253'006'986'740'609'938'316'629'923'576'3"; ///< sqrt(τ)
+        inline static constexpr fixed inv_sqrttau = "0.398'942'280'401'432'677'939'946'059'934'381'868'475'858'631'164'934'657'665'925'829'6"; ///< 1 / sqrt(τ)
+
+        inline static constexpr fixed ln2         = "0.693'147'180'559'945'309'417'232'121'458'176'568'075'500'134'360'255'254'120'680'009'4"; ///< ln(2)
+        inline static constexpr fixed ln10        = "2.302'585'092'994'045'684'017'991'454'684'364'207'601'101'488'628'772'976'033'327'900'9"; ///< ln(10)
+
+        inline static constexpr fixed sqrt2       = "1.414'213'562'373'095'048'801'688'724'209'698'078'569'671'875'376'948'073'176'679'737'99"; ///< sqrt(2)
+        inline static constexpr fixed inv_sqrt2   = "0.707'106'781'186'547'524'400'844'362'104'849'039'284'835'937'688'474'036'588'339'868'9";  ///< 1 / sqrt(2)
+
+        inline static constexpr fixed sqrt3       = "1.732'050'807'568'877'293'527'446'341'505'872'366'942'805'253'810'380'628'055'806'979'4"; ///< sqrt(3)
+        inline static constexpr fixed inv_sqrt3   = "1.414'213'562'373'095'048'801'688'724'209'698'078'569'671'875'376'948'073'176'679'737'9"; ///< 1 / sqrt(3)
+
+        inline static constexpr fixed egamma      = "0.577'215'664'901'532'860'606'512'090'082'402'431'042'159'335'939'92"; ///< γ, Euler's constant, https://en.wikipedia.org/wiki/Euler%27s_constant
+        inline static constexpr fixed phi         = "1.618'033'988'749'894'848'204'586'834'365'638'117'720'309'179'805'762'862'135'448'622'7"; ///< Φ, Golden ratio, https://en.wikipedia.org/wiki/Golden_ratio
 #pragma endregion
 
 #pragma region Increment/Decrement operators
@@ -269,6 +279,7 @@ namespace fpn
 }
 
 #include "fixed.inl"
+#include "fixed_string.inl"
 
 namespace std
 {

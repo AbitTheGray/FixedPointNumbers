@@ -129,12 +129,6 @@ namespace fpn
         // Limit total bits
         Value.Value = TruncateBits_Signed(Value.Value, IB + FB);
     }
-    template<fpn::size_t IB, fpn::size_t FB>
-    constexpr fixed<IB, FB>::fixed(const std::string& value) noexcept
-      : fixed(std::stod(value))
-    {
-        //TODO
-    }
 }
 // Integral + Fractional Values
 namespace fpn
@@ -468,23 +462,6 @@ namespace fpn
     inline constexpr fixed<IB, FB>::operator TF() const noexcept
     {
         return static_cast<TF>(Value.Value) / static_cast<TF>(BIT(FB));
-    }
-}
-// to_string
-namespace fpn
-{
-    template<fpn::size_t IB, fpn::size_t FB>
-    inline std::string to_string(const fixed<IB, FB> value)
-    {
-        return std::to_string(static_cast<double>(value)); //TODO
-    }
-    template<typename CharT, fpn::size_t IB, fpn::size_t FB>
-    std::basic_ostream<CharT>& operator<<(std::basic_ostream<CharT>& out, const fixed<IB, FB> value) noexcept
-    {
-        if constexpr(std::is_same_v<CharT, char>)
-            return out << std::to_string(static_cast<double>(value));
-        else
-            return out << static_cast<double>(value);
     }
 }
 // Increment/Decrement operators
