@@ -1,5 +1,6 @@
 #pragma once
 #include "fixed_math.hpp"
+#include "bithelper.hpp"
 
 // Basic operations
 namespace fpn
@@ -11,7 +12,7 @@ namespace fpn
             return value;
         else
             return -value;
-        //THINK Is this faster than worying about 2's complement (like in https://stackoverflow.com/a/6114214 ) ? Check compiler output first!
+        //THINK Is this faster than worrying about 2's complement (like in https://stackoverflow.com/a/6114214 ) ? Check compiler output first!
     }
     template<fpn::size_t IB, fpn::size_t FB>
     inline constexpr fixed<IB, FB> min(const fixed<IB, FB> left, const fixed<IB, FB> right) noexcept
